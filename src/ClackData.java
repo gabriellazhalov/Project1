@@ -37,5 +37,5 @@ public abstract class ClackData {
     }
 
     //Abstract Method
-    public abstract MessageClackData getData();
+    public abstract String getData();
 }
