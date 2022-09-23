@@ -1,11 +1,14 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-// Gabi is lame
 
 public abstract class ClackData {
     private String userName;
     private int type;
     private java.time.LocalDate date;
+    public final int CONSTANT_LISTUSERS = 0;
+    public final int CONSTANT_LOGOUT = 1;
+    public final int CONSTANT_SENDMESSAGE = 2;
+    public final int CONSTANT_SENDFILE = 3;
 
     public ClackData(String userName, int type) {
         this.userName = userName;
