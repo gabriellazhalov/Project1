@@ -1,4 +1,4 @@
-public abstract class MessageClackData extends ClackData {
+public class MessageClackData extends ClackData {
     private String message;
 
     public MessageClackData(String userName, String message, int type){
@@ -8,6 +8,10 @@ public abstract class MessageClackData extends ClackData {
 
     public MessageClackData() {
         this("Anon", "N/A", 0);
+    }
+
+    public String getData() {
+        return message;
     }
 
     public int hashCode() {
@@ -21,8 +25,8 @@ public abstract class MessageClackData extends ClackData {
 
     public boolean equals(Object obj) {
         MessageClackData messageClackData = (MessageClackData) obj;
-        return this.getUserName() == messageClackData.getUserName() && this.message ==
-                messageClackData.message && this.getType() == messageClackData.getType() &&
+        return this.getUserName().equals(messageClackData.getUserName()) && this.message.equals(messageClackData.message)
+                && this.getType() == messageClackData.getType() &&
                 this.getDate() == messageClackData.getDate();
     }
 
