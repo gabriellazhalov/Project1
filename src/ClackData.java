@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+// Gabi is lame
 
 public abstract class ClackData {
     private String userName;
