@@ -28,7 +28,7 @@ public class MessageClackData extends ClackData {
         return this.getUserName() == messageClackData.getUserName() &&
                 this.message == messageClackData.message &&
                 this.getType() == messageClackData.getType() &&
-                this.getDate() == messageClackData.getDate();
+                this.getDate().equals(messageClackData.getDate());
     }
 
     public String toString() {
