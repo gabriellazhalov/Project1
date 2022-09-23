@@ -25,8 +25,9 @@ public class MessageClackData extends ClackData {
 
     public boolean equals(Object obj) {
         MessageClackData messageClackData = (MessageClackData) obj;
-        return this.getUserName().equals(messageClackData.getUserName()) && this.message.equals(messageClackData.message)
-                && this.getType() == messageClackData.getType() &&
+        return this.getUserName() == messageClackData.getUserName() &&
+                this.message == messageClackData.message &&
+                this.getType() == messageClackData.getType() &&
                 this.getDate() == messageClackData.getDate();
     }
 
