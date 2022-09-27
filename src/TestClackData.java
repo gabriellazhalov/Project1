@@ -31,6 +31,7 @@ public class TestClackData {
         System.out.println("Hashed Value: " + data2.hashCode());
         System.out.println(data2.toString());
 
+        // Testing equals() method of MessageClackData
         System.out.println(data1.equals(data2));
         System.out.println(data2.equals(data1));
         System.out.println(sameData1.equals(data1));
