@@ -16,19 +16,19 @@ public class MessageClackData extends ClackData {
 
     public int hashCode() {
         int hashedValue = 0;
-        hashedValue += getUserName().hashCode();
+        hashedValue += super.userName.hashCode();
         hashedValue += message.hashCode();
-        hashedValue += Integer.toString(getType()).hashCode();
-        hashedValue += getDate().hashCode();
+        hashedValue += Integer.toString(super.type).hashCode();
+        hashedValue += super.date.hashCode();
         return hashedValue;
     }
 
     public boolean equals(Object obj) {
         MessageClackData messageClackData = (MessageClackData) obj;
-        return this.getUserName() == messageClackData.getUserName() &&
+        return this.getUserName() == messageClackData.userName &&
                 this.message == messageClackData.message &&
-                this.getType() == messageClackData.getType() &&
-                this.getDate().equals(messageClackData.getDate());
+                this.getType() == messageClackData.type &&
+                this.getDate().equals(messageClackData.date);
     }
 
     public String toString() {
