@@ -2,9 +2,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public abstract class ClackData {
-    private String userName;
-    private int type;
-    private java.time.LocalDate date;
+    protected String userName;
+    protected int type;
+    protected java.time.LocalDate date;
     public final int CONSTANT_LISTUSERS = 0;
     public final int CONSTANT_LOGOUT = 1;
     public final int CONSTANT_SENDMESSAGE = 2;
