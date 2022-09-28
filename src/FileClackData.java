@@ -11,7 +11,7 @@ public class FileClackData extends ClackData{
 
     public FileClackData() {
         super();
-        this.fileName = null;
+        this.fileName = "";
         this.fileContents = null;
     }
 
@@ -39,7 +39,7 @@ public class FileClackData extends ClackData{
         int hashedValue = 0;
         hashedValue += super.userName.hashCode();
         hashedValue += fileName.hashCode();
-        hashedValue += fileContents.hashCode();
+        //hashedValue += fileContents.hashCode();
         hashedValue += Integer.toString(super.type).hashCode();
         hashedValue += super.date.hashCode();
         return hashedValue;
@@ -55,7 +55,7 @@ public class FileClackData extends ClackData{
     }
 
     public String toString() {
-        return "User: " + super.userName + "\nFile Name: " + fileName + "File Contents: " + fileContents + "\nType of Data: " + super.type + "\nDate: " + super.date;
+        return "User: " + super.userName + "\nFile Name: " + fileName + "\nFile Contents: " + fileContents + "\nType of Data: " + super.type + "\nDate: " + super.date;
     }
 
 }
