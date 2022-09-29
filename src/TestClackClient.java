@@ -42,7 +42,6 @@ public class TestClackClient {
         System.out.println(sameClient1.equals(client1));
         System.out.println(client1.equals(client2));
         System.out.println(client2.equals(client1));
-        System.out.println(client1.equals(client1));
     }
 
 }
