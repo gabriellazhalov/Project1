@@ -43,14 +43,17 @@ public class TestClackData {
 
         //Testing FileClackData
         System.out.println("******************************\n" + "FileClackData Tests: \n");
-        ClackData fileData1 = new FileClackData("andrewam", "testfile", 2);
-        ClackData sameFileData1 = new FileClackData("andrewam", "testfile", 2);
-        ClackData fileData2 = new FileClackData();
+        FileClackData fileData1 = new FileClackData("andrewam", "testfile", 2);
+        FileClackData sameFileData1 = new FileClackData("andrewam", "testfile", 2);
+        FileClackData fileData2 = new FileClackData();
 
         // Testing ClackData and MessageClackData Methods on first object which
         // uses MessageClackData's first constructor
         System.out.println(fileData1.getType());
         System.out.println(fileData1.getUserName());
+        System.out.println(fileData1.getFileName());
+        fileData1.setFileName("test2file");
+        System.out.println(fileData1.getFileName());
         System.out.println(fileData1.getDate());
         System.out.println(fileData1.getData());
         System.out.println("Hashed Value: " + fileData1.hashCode());
@@ -59,6 +62,9 @@ public class TestClackData {
         System.out.println("");
         System.out.println(sameFileData1.getType());
         System.out.println(sameFileData1.getUserName());
+        System.out.println(sameFileData1.getFileName());
+        sameFileData1.setFileName("test2file");
+        System.out.println(sameFileData1.getFileName());
         System.out.println(sameFileData1.getDate());
         System.out.println(sameFileData1.getData());
         System.out.println("Hashed Value: " + sameFileData1.hashCode());
@@ -68,6 +74,9 @@ public class TestClackData {
         // uses MessageClackData's second constructor
         System.out.println(fileData2.getType());
         System.out.println(fileData2.getUserName());
+        System.out.println(fileData2.getFileName());
+        fileData2.setFileName("test3file");
+        System.out.println(fileData2.getFileName());
         System.out.println(fileData2.getDate());
         System.out.println(fileData2.getData());
         System.out.println("Hashed Value: " + fileData2.hashCode());
