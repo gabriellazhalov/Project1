@@ -1,8 +1,12 @@
 package main;
 import data.*;
 
+/**
+ * ClackClient represents the client who is using the service. Contains information about the client,
+ * host computer that is the server, port, connection status, and data to be sent and received.
+ * @author Gabriella Zhalov
+ */
 public class ClackClient {
-    //Variables
     private String userName;
     private String hostName;
     private int port;
@@ -11,7 +15,13 @@ public class ClackClient {
     private ClackData dataToReceiveFromServer;
     public final int FIXED_PORT = 7000;
 
-    //Constructors
+    /**
+     * main constructor for ClackClient
+     * Takes in the username of the client, the hostname of the server computer, and port number.
+     * @param userName username of client
+     * @param hostName name of computer that is hosting the server
+     * @param port port number to access
+     */
     public ClackClient(String userName, String hostName, int port) {
         this.userName = userName;
         this.hostName = hostName;
@@ -20,36 +30,80 @@ public class ClackClient {
         dataToReceiveFromServer = null;
     }
 
+    /** secondary constructor for ClackClient
+     * Takes in a username and hostname, but sets the port to a default value
+     * @param userName username of client
+     * @param hostName name of computer that is hosting the server
+     */
     public ClackClient(String userName, String hostName) {
         this(userName, hostName, 7000);
     }
 
+    /** tertiary constructor for ClackClient
+     * Takes in the username of the client, sets the hostname and port to a default value
+     * @param userName username of client
+     */
     public ClackClient(String userName) {
         this(userName, "localhost");
     }
 
+    /** default constructor for ClackClient
+     * sets the username to 'Anon', hostname to 'localhost', and port to 7000 using previous constructors
+     */
     public ClackClient() {
         this("Anon");
     }
 
-    //Methods
+    /**
+     * This function is currently undefined
+     */
     public void start() {};
+
+    /**
+     * This function is currently undefined
+     */
     public void readData() {};
+
+    /**
+     * This function is currently undefined
+     */
     public void sendData() {};
+
+    /**
+     * This function is currently undefined
+     */
     public void receiveData() {};
+
+    /**
+     * This function is currently undefined
+     */
     public void printData() {};
 
+    /** Accessor method to get the username
+     * @return <code>String</code> userName
+     */
     public String getUserName() {
         return userName;
     }
+
+    /** Accessor method to get the hostname
+     * @return <code>String</code> hostName
+     */
     public String getHostName() {
         return hostName;
     }
 
+    /** Accessor method to get the port number
+     * @return <code>int</code> port
+     */
     public int getPort() {
         return port;
     }
 
+    /**
+     * Overriding hashCode method to hash a ClackClient object
+     * @return <code>int</code> hashedValue
+     */
     public int hashCode() {
         int hashedValue = 0;
         hashedValue += getUserName().hashCode();
@@ -60,6 +114,10 @@ public class ClackClient {
         return hashedValue;
     }
 
+    /**
+     * Overriding equals method to determine if a ClackClient object equals another ClackClient object
+     * @return <code>boolean</code>
+     */
     public boolean equals(Object obj) {
         ClackClient clackClient = (ClackClient) obj;
         return this.userName == clackClient.userName && this.hostName ==
@@ -68,6 +126,10 @@ public class ClackClient {
                 == clackClient.dataToReceiveFromServer;
     }
 
+    /**
+     * Overriding toString method to print out a ClackClient object
+     * @return <code>String</code>
+     */
     public String toString() {
         return "User: " + userName + "\nHost: " + hostName + "\nPort: " + port + "\nData to Send: "
                 + dataToSendToServer.toString() + "\nData to Receive: " + dataToReceiveFromServer.toString();
