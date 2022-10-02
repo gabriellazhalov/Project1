@@ -29,14 +29,14 @@ public class ClackServer {
     }
 
     public int getPort() {
-        return getPort();
+        return this.port;
     }
 
     public int hashCode() {
         int hashedValue = 0;
         hashedValue += this.port;
-        hashedValue += dataToReceiveFromClient.hashCode();
-        hashedValue += dataToSendToClient.hashCode();
+        if(dataToReceiveFromClient != null) hashedValue += dataToReceiveFromClient.hashCode();
+        if(dataToSendToClient != null) hashedValue += dataToSendToClient.hashCode();
         if(closeConnection) hashedValue += 1;
         return hashedValue;
     }
@@ -45,12 +45,12 @@ public class ClackServer {
         ClackServer clackServer = (ClackServer) obj;
         return this.port == clackServer.port &&
                 this.closeConnection == clackServer.closeConnection &&
-                this.dataToReceiveFromClient.equals(clackServer.dataToReceiveFromClient) &&
-                this.dataToSendToClient.equals(clackServer.dataToSendToClient);
+                this.dataToReceiveFromClient == clackServer.dataToReceiveFromClient &&
+                this.dataToSendToClient == clackServer.dataToSendToClient;
     }
 
     public String toString() {
-        return ("Port Number: " + this.port + "\nClose Connection: " + closeConnection + "\nData to send to Client: " + dataToSendToClient + "\nData to receive from Client" + dataToReceiveFromClient);
+        return ("Port Number: " + this.port + "\nClose Connection: " + closeConnection + "\nData to send to Client: " + dataToSendToClient + "\nData to receive from Client: " + dataToReceiveFromClient);
     }
 
 
