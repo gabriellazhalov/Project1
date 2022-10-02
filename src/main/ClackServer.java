@@ -1,3 +1,6 @@
+package main;
+import data.*;
+
 public class ClackServer {
     private int port;
     private boolean closeConnection;

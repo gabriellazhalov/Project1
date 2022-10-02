@@ -1,3 +1,6 @@
+package main;
+import data.*;
+
 public class ClackClient {
     //Variables
     private String userName;

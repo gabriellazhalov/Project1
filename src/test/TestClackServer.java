@@ -1,10 +1,14 @@
+package test;
+
+import main.ClackServer;
+
 public class TestClackServer {
     public static void main(String[] args) {
         ClackServer C1 = new ClackServer(1000);
         ClackServer sameC1 = new ClackServer(1000);
         ClackServer C2 = new ClackServer();
 
-        //Testing ClackServer Class
+        //Testing main.ClackServer Class
         System.out.println(C1);
         System.out.println(sameC1);
         System.out.println(C2);

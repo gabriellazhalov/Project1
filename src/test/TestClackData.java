@@ -1,15 +1,20 @@
-import java.util.*;
+package test;
+
+import data.ClackData;
+import data.FileClackData;
+import data.MessageClackData;
+
 public class TestClackData {
     public static void main(String[] args) {
-        //Testing MessageClackData
+        //Testing data.MessageClackData
 
-        System.out.println("******************************\n" + "MessageClackData Tests: \n");
+        System.out.println("******************************\n" + "data.MessageClackData Tests: \n");
         ClackData data1 = new MessageClackData("zhalovgv", "hello world", 2);
         ClackData sameData1 = new MessageClackData("zhalovgv", "hello world", 2);
         ClackData data2 = new MessageClackData();
 
-        // Testing ClackData and MessageClackData Methods on first object which
-        // uses MessageClackData's first constructor
+        // Testing data.ClackData and data.MessageClackData Methods on first object which
+        // uses data.MessageClackData's first constructor
         System.out.println(data1.getType());
         System.out.println(data1.getUserName());
         System.out.println(data1.getDate());
@@ -25,8 +30,8 @@ public class TestClackData {
         System.out.println("Hashed Value: " + sameData1.hashCode());
         System.out.println(sameData1.toString());
 
-        // Testing ClackData and MessageClackData Methods on first object which
-        // uses MessageClackData's second constructor
+        // Testing data.ClackData and data.MessageClackData Methods on first object which
+        // uses data.MessageClackData's second constructor
         System.out.println(data2.getType());
         System.out.println(data2.getUserName());
         System.out.println(data2.getDate());
@@ -34,21 +39,21 @@ public class TestClackData {
         System.out.println("Hashed Value: " + data2.hashCode());
         System.out.println(data2.toString());
 
-        // Testing equals() method of MessageClackData
+        // Testing equals() method of data.MessageClackData
         System.out.println(data1.equals(data2));
         System.out.println(data2.equals(data1));
         System.out.println(sameData1.equals(data1));
         System.out.println(data1.equals(sameData1));
 
 
-        //Testing FileClackData
-        System.out.println("******************************\n" + "FileClackData Tests: \n");
+        //Testing data.FileClackData
+        System.out.println("******************************\n" + "data.FileClackData Tests: \n");
         FileClackData fileData1 = new FileClackData("andrewam", "testfile", 2);
         FileClackData sameFileData1 = new FileClackData("andrewam", "testfile", 2);
         FileClackData fileData2 = new FileClackData();
 
-        // Testing ClackData and MessageClackData Methods on first object which
-        // uses MessageClackData's first constructor
+        // Testing data.ClackData and data.MessageClackData Methods on first object which
+        // uses data.MessageClackData's first constructor
         System.out.println(fileData1.getType());
         System.out.println(fileData1.getUserName());
         System.out.println(fileData1.getFileName());
@@ -70,8 +75,8 @@ public class TestClackData {
         System.out.println("Hashed Value: " + sameFileData1.hashCode());
         System.out.println(sameFileData1.toString());
 
-        // Testing ClackData and MessageClackData Methods on first object which
-        // uses MessageClackData's second constructor
+        // Testing data.ClackData and data.MessageClackData Methods on first object which
+        // uses data.MessageClackData's second constructor
         System.out.println(fileData2.getType());
         System.out.println(fileData2.getUserName());
         System.out.println(fileData2.getFileName());
@@ -82,7 +87,7 @@ public class TestClackData {
         System.out.println("Hashed Value: " + fileData2.hashCode());
         System.out.println(fileData2.toString());
 
-        // Testing equals() method of MessageClackData
+        // Testing equals() method of data.MessageClackData
         System.out.println(fileData1.equals(fileData2));
         System.out.println(fileData2.equals(fileData1));
         System.out.println(sameFileData1.equals(fileData1));
