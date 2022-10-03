@@ -9,19 +9,27 @@ import java.time.format.DateTimeFormatter;
  */
 public abstract class ClackData {
     protected String userName;
+    /**
+     * <code>int</code> type can take 4 different forms declared constant, LISTUSERS, LOGOUT, SENDMESSAGE, SENDFILE
+     */
     protected int type;
     protected java.time.LocalDate date;
 
     /**
-     * <code>int</code> type can take 4 different forms declared constant here
      * LISTUSERS gives a list of all users connected to the session
-     * LOGOUT closes the connection
-     * SENDMESSAGE sends a message
-     * SENDFILE sends a file
      */
     public final int CONSTANT_LISTUSERS = 0;
+    /**
+     * LOGOUT closes the connection
+     */
     public final int CONSTANT_LOGOUT = 1;
+    /**
+     * SENDMESSAGE sends a message
+     */
     public final int CONSTANT_SENDMESSAGE = 2;
+    /**
+     * SENDFILE sends a file
+     */
     public final int CONSTANT_SENDFILE = 3;
 
     /**
