@@ -4,6 +4,7 @@ package data;
  * MessageClackData is the subclass of ClackData, which is meant to create messages sent in Clack.
  * It contains 1 local data member, message, which stores the message being sent.
  * In addition, MessageClackData inherits teh 3 data members from Clack data, storing the Username associated with the data, the type of the data, and the date that the member was created
+ * @author Gabriella Zhalov
  */
 public class MessageClackData extends ClackData {
     private String message;
