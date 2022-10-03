@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 /**
  * ClackData is the superclass for all data transmitted through Clack, it has two child classes, MessageClackData and FileClackData
  * It contains 3 data members, storing the Username associated with the data, the type of the data, and the date that the member was created
+ * @author Aengus Andrew
+ * @author Gabriella Zhalov
  */
 public abstract class ClackData {
     protected String userName;
