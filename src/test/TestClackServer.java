@@ -4,7 +4,7 @@ import main.ClackServer;
 
 public class TestClackServer {
     public static void main(String[] args) {
-        ClackServer C1 = new ClackServer(1000);
+        ClackServer C1 = new ClackServer(-1000);
         ClackServer sameC1 = new ClackServer(1000);
         ClackServer C2 = new ClackServer();
 

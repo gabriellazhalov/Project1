@@ -8,8 +8,8 @@ public class TestClackData {
     public static void main(String[] args) {
         //Testing data.MessageClackData
 
-        System.out.println("******************************\n" + "data.MessageClackData Tests: \n");
-        ClackData data1 = new MessageClackData("zhalovgv", "hello world", 2);
+        System.out.println("******************************\n" + "MessageClackData Tests: \n");
+        ClackData data1 = new MessageClackData(null, "hello world", 2);
         ClackData sameData1 = new MessageClackData("zhalovgv", "hello world", 2);
         ClackData data2 = new MessageClackData();
 
