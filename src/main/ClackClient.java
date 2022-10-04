@@ -109,8 +109,8 @@ public class ClackClient {
         hashedValue += getUserName().hashCode();
         hashedValue += getHostName().hashCode();
         hashedValue += Integer.toString(getPort()).hashCode();
-        hashedValue += dataToSendToServer.hashCode();
-        hashedValue += dataToReceiveFromServer.hashCode();
+        if(dataToSendToServer != null) hashedValue += dataToSendToServer.hashCode();
+        if(dataToReceiveFromServer != null) hashedValue += dataToReceiveFromServer.hashCode();
         return hashedValue;
     }
 
@@ -132,7 +132,7 @@ public class ClackClient {
      */
     public String toString() {
         return "User: " + userName + "\nHost: " + hostName + "\nPort: " + port + "\nData to Send: "
-                + dataToSendToServer.toString() + "\nData to Receive: " + dataToReceiveFromServer.toString();
+                + dataToSendToServer + "\nData to Receive: " + dataToReceiveFromServer;
     }
 
 }
