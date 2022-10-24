@@ -89,4 +89,8 @@ public abstract class ClackData {
      */
     //Abstract Method
     public abstract String getData();
+
+    protected String encrypt(String inputStringToEncrypt, String key) {return "done";}
+
+    protected String decrypt(String inputStringToDecrypt, String key) {return "done";}
 }

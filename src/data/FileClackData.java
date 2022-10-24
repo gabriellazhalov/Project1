@@ -1,4 +1,5 @@
 package data;
+import java.io.*;
 
 /**
  * FileClackData is a subclass of ClackData which stores data for files which are going to be sent
@@ -6,7 +7,7 @@ package data;
  */
 public class FileClackData extends ClackData{
 
-    private String fileName;
+    private File fileName;
     private String fileContents;
 
     /**
@@ -15,7 +16,7 @@ public class FileClackData extends ClackData{
      * @param fileName Name of file being sent
      * @param type type of ClackData object, see ClackData comments for more
      */
-    public FileClackData(String userName, String fileName, int type) {
+    public FileClackData(String userName, File fileName, int type) {
         super(userName, type);
         this.fileName = fileName;
         this.fileContents = null;
@@ -34,7 +35,7 @@ public class FileClackData extends ClackData{
      * Changes the value of the object filename to the filename passed
      * @param fileName New name of file
      */
-    public void setFileName(String fileName) {
+    public void setFileName(File fileName) {
         this.fileName = fileName;
     }
 
@@ -42,7 +43,7 @@ public class FileClackData extends ClackData{
      * Accessor method for filename of object
      * @return <code>String</code> fileName
      */
-    public String getFileName() {
+    public File getFileName() {
         return this.fileName;
     }
 
@@ -57,15 +58,64 @@ public class FileClackData extends ClackData{
     /**
      * This function is currently undefined
      */
-    public void readFileContents() {
+    public void readFileContents() throws IOException {
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+            String nextLine;
+            while ((nextLine = bufferedReader.readLine()) != null) {
+                fileContents += nextLine;
+            }
+            bufferedReader.close();
+        } catch (FileNotFoundException fnfe){
+                System.err.println("File does not exist");
+        } catch( IOException ioe) {
+            System.err.println("IOException occurred");
+        }
+    }
 
+    public void readFileContents(String key) {
+        try{
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+            String nextLine;
+            while ( (nextLine = bufferedReader.readLine()) != null ){
+                nextLine = encrypt(nextLine, key);
+                fileContents += nextLine;
+            }
+            bufferedReader.close();
+        } catch (FileNotFoundException fnfe){
+            System.err.println("File does not exist");
+        } catch( IOException ioe) {
+            System.err.println("IOException occurred");
+        }
     }
 
     /**
      * This function is currently undefined
      */
     public void writeFileContents() {
+        try{
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
+            bufferedWriter.write(fileContents);
+            bufferedWriter.close();
+        }catch (FileNotFoundException fnfe){
+            System.err.println("File does not exist");
+        } catch( IOException ioe) {
+            System.err.println("IOException occurred");
+        }
 
+    }
+
+    public void writeFileContents(String key) {
+        try{
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
+            fileContents = decrypt(fileContents, key);
+            bufferedWriter.write(fileContents);
+            bufferedWriter.close();
+        }catch (FileNotFoundException fnfe){
+            System.err.println("File does not exist");
+        } catch( IOException ioe) {
+            System.err.println("IOException occurred");
+        }
     }
 
     /**
