@@ -7,7 +7,7 @@ import java.io.*;
  */
 public class FileClackData extends ClackData{
 
-    private File fileName;
+    private String fileName;
     private String fileContents;
 
     /**
@@ -16,7 +16,7 @@ public class FileClackData extends ClackData{
      * @param fileName Name of file being sent
      * @param type type of ClackData object, see ClackData comments for more
      */
-    public FileClackData(String userName, File fileName, int type) {
+    public FileClackData(String userName, String fileName, int type) {
         super(userName, type);
         this.fileName = fileName;
         this.fileContents = null;
@@ -35,7 +35,7 @@ public class FileClackData extends ClackData{
      * Changes the value of the object filename to the filename passed
      * @param fileName New name of file
      */
-    public void setFileName(File fileName) {
+    public void setFileName(String fileName) {
         this.fileName = fileName;
     }
 
@@ -43,7 +43,7 @@ public class FileClackData extends ClackData{
      * Accessor method for filename of object
      * @return <code>String</code> fileName
      */
-    public File getFileName() {
+    public String getFileName() {
         return this.fileName;
     }
 
@@ -99,7 +99,7 @@ public class FileClackData extends ClackData{
             bufferedWriter.close();
         }catch (FileNotFoundException fnfe){
             System.err.println("File does not exist");
-        } catch( IOException ioe) {
+        } catch(IOException ioe) {
             System.err.println("IOException occurred");
         }
 

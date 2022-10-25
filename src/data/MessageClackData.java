@@ -24,7 +24,7 @@ public class MessageClackData extends ClackData {
      * default constructor for MessageClackData, calls main constructor and sets default values for the object
      */
     public MessageClackData() {
-        this("Anon", "N/A", 0);
+        this("Anon", "N/A", 1);
     }
 
     /**

@@ -1,5 +1,6 @@
 package main;
 import data.*;
+import java.util.*;
 
 /**
  * ClackClient represents the client who is using the service. Contains information about the client,
@@ -13,7 +14,10 @@ public class ClackClient {
     private boolean closeConnection;
     private ClackData dataToSendToServer;
     private ClackData dataToReceiveFromServer;
-    public final int FIXED_PORT = 7000;
+    private static final int DEFAULT_PORT = 7000;
+    private final String KEY = "";
+    private Scanner inFromStd;
+
 
     /**
      * main constructor for ClackClient
@@ -23,11 +27,21 @@ public class ClackClient {
      * @param port port number to access
      */
     public ClackClient(String userName, String hostName, int port) {
-        this.userName = userName;
-        this.hostName = hostName;
-        this.port = port;
-        dataToSendToServer = null;
-        dataToReceiveFromServer = null;
+            this.userName = userName;
+            if (userName == null) {
+                throw new IllegalArgumentException("Username must not be null.");
+            }
+            this.hostName = hostName;
+            if (hostName == null) {
+                throw new IllegalArgumentException("Hostname must not be null.");
+            }
+            this.port = port;
+            if (port < 1024) {
+                throw new IllegalArgumentException("Port number must be greater than or equal to 1024.");
+            }
+            dataToSendToServer = null;
+            dataToReceiveFromServer = null;
+
     }
 
     /** secondary constructor for ClackClient
@@ -43,8 +57,8 @@ public class ClackClient {
      * Takes in the username of the client, sets the hostname and port to a default value
      * @param userName username of client
      */
-    public ClackClient(String userName) {
-        this(userName, "localhost");
+    public ClackClient(String userName) throws IllegalArgumentException {
+            this(userName, "localhost");
     }
 
     /** default constructor for ClackClient
@@ -57,12 +71,37 @@ public class ClackClient {
     /**
      * This function is currently undefined
      */
-    public void start() {};
+    public void start() {
+        inFromStd = new Scanner(System.in);
+        readClientData();
+
+        dataToReceiveFromServer = dataToSendToServer;
+        printData();
+    };
 
     /**
      * This function is currently undefined
      */
-    public void readData() {};
+    public void readClientData() {
+        String dataString;
+        String tempFileName;
+
+        System.out.println("Input a command.");
+        dataString = inFromStd.nextLine();
+        tempFileName = dataString.substring(8);
+
+        if (dataString.equals("DONE")) {
+            dataToSendToServer = new MessageClackData();
+        }
+        else if (dataString.equals("SENDFILE" + tempFileName)) {
+            dataToSendToServer = new FileClackData(userName, tempFileName, 3);
+        }
+        else if (dataString.equals("LISTUSERS")) {
+        }
+        else {
+            dataToSendToServer = new MessageClackData(userName, "", 2);
+        }
+    };
 
     /**
      * This function is currently undefined
@@ -77,7 +116,9 @@ public class ClackClient {
     /**
      * This function is currently undefined
      */
-    public void printData() {};
+    public void printData() {
+        dataToReceiveFromServer.toString();
+    };
 
     /** Accessor method to get the username
      * @return <code>String</code> userName
