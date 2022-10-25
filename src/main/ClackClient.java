@@ -84,11 +84,13 @@ public class ClackClient {
      */
     public void readClientData() {
         String dataString;
-        String tempFileName;
+        String tempFileName = "";
 
         System.out.println("Input a command.");
         dataString = inFromStd.nextLine();
-        tempFileName = dataString.substring(8);
+        if (dataString.length() > 8) {
+            tempFileName = dataString.substring(8);
+        }
 
         if (dataString.equals("DONE")) {
             dataToSendToServer = new MessageClackData();
@@ -117,7 +119,7 @@ public class ClackClient {
      * This function is currently undefined
      */
     public void printData() {
-        dataToReceiveFromServer.toString();
+        System.out.println(dataToReceiveFromServer.toString());
     };
 
     /** Accessor method to get the username

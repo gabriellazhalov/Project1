@@ -12,6 +12,9 @@ public class TestClackClient {
         ClackClient client3 = new ClackClient("zhalovgv");
         ClackClient client4 = new ClackClient();
 
+        client2.start();
+
+
         //Testing IAE
         //ClackClient iUser = new ClackClient("zhalovgv", null, 1025);
 
