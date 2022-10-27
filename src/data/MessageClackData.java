@@ -24,7 +24,8 @@ public class MessageClackData extends ClackData {
      * Constructor for MessageClackData, takes a key and automatically encrypts message.
      */
     public MessageClackData(String userName, String message, String key, int type) {
-
+        this(userName, "", type);
+        this.message = encrypt(message, key);
     }
 
     /**
