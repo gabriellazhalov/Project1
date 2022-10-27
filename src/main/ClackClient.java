@@ -15,8 +15,8 @@ public class ClackClient {
     private ClackData dataToSendToServer;
     private ClackData dataToReceiveFromServer;
     private static final int DEFAULT_PORT = 7000;
-    private final String KEY = "BEANSYEAH";
     private Scanner inFromStd;
+    private final String KEY = "BEANSYEAH";
 
 
     /**
@@ -25,7 +25,6 @@ public class ClackClient {
      * @param userName username of client
      * @param hostName name of computer that is hosting the server
      * @param port port number to access
-     * @throws IllegalArgumentException
      */
     public ClackClient(String userName, String hostName, int port) {
             this.userName = userName;

@@ -64,8 +64,6 @@ public class FileClackData extends ClackData{
 
     /**
      * Reads contents of a file into the fileContents data member
-     * @throws IOException
-     * @throws FileNotFoundException
      */
     public void readFileContents() throws IOException {
         try {
@@ -85,8 +83,6 @@ public class FileClackData extends ClackData{
     /**
      * Reads contents of a file and encrypts them using <code>key</code> before storing it into fileContents data member
      * @param key Key to encrypt filecontents with
-     * @throws IOException
-     * @throws FileNotFoundException
      */
     public void readFileContents(String key) {
         try{
@@ -106,8 +102,6 @@ public class FileClackData extends ClackData{
 
     /**
      * Writes file contents to a file
-     * @throws IOException
-     * @throws FileNotFoundException
      */
     public void writeFileContents() {
         try{
@@ -125,8 +119,6 @@ public class FileClackData extends ClackData{
     /**
      * Decrypts fileContents and writes decrypted data to a file
      * @param key Key for decrypting data
-     * @throws IOException
-     * @throws FileNotFoundException
      */
     public void writeFileContents(String key) {
         try{
