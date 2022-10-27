@@ -63,7 +63,9 @@ public class FileClackData extends ClackData{
     public String getData(String key) { return decrypt(fileContents, key); }
 
     /**
-     * This function is currently undefined
+     * Reads contents of a file into the fileContents data member
+     * @throws IOException
+     * @throws FileNotFoundException
      */
     public void readFileContents() throws IOException {
         try {
@@ -80,6 +82,12 @@ public class FileClackData extends ClackData{
         }
     }
 
+    /**
+     * Reads contents of a file and encrypts them using <code>key</code> before storing it into fileContents data member
+     * @param key Key to encrypt filecontents with
+     * @throws IOException
+     * @throws FileNotFoundException
+     */
     public void readFileContents(String key) {
         try{
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
@@ -97,7 +105,9 @@ public class FileClackData extends ClackData{
     }
 
     /**
-     * This function is currently undefined
+     * Writes file contents to a file
+     * @throws IOException
+     * @throws FileNotFoundException
      */
     public void writeFileContents() {
         try{
@@ -112,6 +122,12 @@ public class FileClackData extends ClackData{
 
     }
 
+    /**
+     * Decrypts fileContents and writes decrypted data to a file
+     * @param key Key for decrypting data
+     * @throws IOException
+     * @throws FileNotFoundException
+     */
     public void writeFileContents(String key) {
         try{
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
