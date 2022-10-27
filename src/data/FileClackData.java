@@ -56,6 +56,13 @@ public class FileClackData extends ClackData{
     }
 
     /**
+     * Accessor method for decrypted contents of file
+     * @param key Key to decrypt encrypted data
+     * @return Decrypted file contents
+     */
+    public String getData(String key) { return decrypt(fileContents, key); }
+
+    /**
      * This function is currently undefined
      */
     public void readFileContents() throws IOException {

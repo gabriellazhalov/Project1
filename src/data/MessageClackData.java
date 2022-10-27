@@ -44,6 +44,13 @@ public class MessageClackData extends ClackData {
     }
 
     /**
+     * Accessor method for decrypted message
+     * @param key Key to decrypt encrypted data
+     * @return Decrypted message
+     */
+    public String getData(String key) { return decrypt(message, key); }
+
+    /**
      * Overriding hashCode method to hash a MessageClackData object
      * @return <code>int</code> hashedValue
      */

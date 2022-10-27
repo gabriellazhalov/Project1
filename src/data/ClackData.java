@@ -88,8 +88,14 @@ public abstract class ClackData {
     /**
      * Abstract Accessor to retrieve data of subclasses
      */
-    //Abstract Method
     public abstract String getData();
+
+    /**
+     * Abstract Accessor to retrieve unencrypted data of subclasses
+     * @param key Key to decrypt encrypted data
+     * @return Unencrypted data
+     */
+    public abstract String getData(String key);
 
     /**
      * encrypt takes a string to encrypt and a key and uses a Vignere cypher to encrypt it, returning the encryption
