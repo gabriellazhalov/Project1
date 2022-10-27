@@ -15,8 +15,8 @@ public class ClackClient {
     private ClackData dataToSendToServer;
     private ClackData dataToReceiveFromServer;
     private static final int DEFAULT_PORT = 7000;
-    private final String KEY = "";
     private Scanner inFromStd;
+    private final String KEY = "BEANSYEAH";
 
 
     /**
@@ -69,7 +69,7 @@ public class ClackClient {
     }
 
     /**
-     * This function is currently undefined
+     * start() initializes the connection to the server
      */
     public void start() {
         inFromStd = new Scanner(System.in);
@@ -80,7 +80,7 @@ public class ClackClient {
     };
 
     /**
-     * This function is currently undefined
+     * Receives an input from the user through standard input and prepares to send that data to the server
      */
     public void readClientData() {
         String dataString;
@@ -116,7 +116,7 @@ public class ClackClient {
     public void receiveData() {};
 
     /**
-     * This function is currently undefined
+     * printData prints all the client information sent by a particular user
      */
     public void printData() {
         System.out.println(dataToReceiveFromServer.toString());
