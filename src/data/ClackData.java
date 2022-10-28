@@ -115,12 +115,10 @@ public abstract class ClackData {
             }
             else if (Character.isLowerCase(chr)) {
                 encryption += (char) (((chr - 'a') + (key.charAt(j) - 'A')) % 26 + 'a');
-                System.out.println(key.charAt(j));
                 j = ++j % key.length();
             }
             else if (Character.isWhitespace(chr)) encryption += chr;
         }
-        System.out.println(encryption);
         return encryption;
     }
 
@@ -142,7 +140,6 @@ public abstract class ClackData {
             }
             else if (Character.isLowerCase(chr)) {
                 decryption += (char) (((chr - 'a') - (key.charAt(j) - 'A') + 26) % 26 + 'a');
-                System.out.println(key.charAt(j));
                 j = ++j % key.length();
             }
             else decryption += chr;

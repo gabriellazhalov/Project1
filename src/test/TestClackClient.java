@@ -2,9 +2,16 @@ package test;
 
 import main.ClackClient;
 
+import java.io.IOException;
+
 public class TestClackClient {
-    public static void main(String[] args) {
-        //ClackClient tester = new ClackClient(null, "gabi");
+    public static void main(String[] args) throws IOException {
+
+        // IN ORDER TO TEST FOR EXCEPTIONS, UNCOMMENT ONE TEST CLIENT AT TIME
+
+        //  ClackClient tester = new ClackClient("zhalovgv", null, 2000);
+       // ClackClient tester = new ClackClient(null, "gabi", 2000);
+       // ClackClient tester = new ClackClient("zhalovgv", "gabi", 1000);
 
         ClackClient client1 = new ClackClient("zhalovgv", "gabi", 2000);
         ClackClient sameClient1 = new ClackClient("zhalovgv", "gabi", 2000);
@@ -12,12 +19,11 @@ public class TestClackClient {
         ClackClient client3 = new ClackClient("zhalovgv");
         ClackClient client4 = new ClackClient();
 
+        // Testing start method, which in turn tests readClientData and printData
         client2.start();
 
-
-        //Testing IAE
-        //ClackClient iUser = new ClackClient("zhalovgv", null, 1025);
         // Testing methods for client1
+        System.out.println("******************************\n" + "Testing for clients 1-4");
         System.out.println(client1.getUserName());
         System.out.println(client1.getHostName());
         System.out.println(client1.getPort());
