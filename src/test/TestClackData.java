@@ -4,9 +4,18 @@ import data.ClackData;
 import data.FileClackData;
 import data.MessageClackData;
 
+import java.io.IOException;
+
 public class TestClackData {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         //Testing data.MessageClackData
+
+        FileClackData tester = new FileClackData("zhalovgv", "test.txt", 2);
+//        tester.readFileContents();
+//        tester.writeFileContents();
+
+        tester.readFileContents("BEANS");
+        tester.writeFileContents("BEANS");
 
         System.out.println("******************************\n" + "MessageClackData Tests: \n");
         ClackData data1 = new MessageClackData(null, "hello world", 2);

@@ -6,8 +6,8 @@ public class TestClackClient {
     public static void main(String[] args) {
         //ClackClient tester = new ClackClient(null, "gabi");
 
-        ClackClient client1 = new ClackClient("zhalovgv", "gabi", -1000);
-        ClackClient sameClient1 = new ClackClient("zhalovgv", "gabi", 1);
+        ClackClient client1 = new ClackClient("zhalovgv", "gabi", 2000);
+        ClackClient sameClient1 = new ClackClient("zhalovgv", "gabi", 2000);
         ClackClient client2 = new ClackClient("zhalovgv", "gabi");
         ClackClient client3 = new ClackClient("zhalovgv");
         ClackClient client4 = new ClackClient();
@@ -17,7 +17,6 @@ public class TestClackClient {
 
         //Testing IAE
         //ClackClient iUser = new ClackClient("zhalovgv", null, 1025);
-
         // Testing methods for client1
         System.out.println(client1.getUserName());
         System.out.println(client1.getHostName());
@@ -52,6 +51,7 @@ public class TestClackClient {
         System.out.println(client1.equals(client2));
         System.out.println(client2.equals(client1));
     }
+
 
 }
 
