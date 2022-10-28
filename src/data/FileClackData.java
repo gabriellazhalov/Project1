@@ -93,15 +93,15 @@ public class FileClackData extends ClackData{
             File file = new File(fileName);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             String nextLine = bufferedReader.readLine();
+            String noEncyrptFileContents = "";
             if (nextLine != null) {
-                nextLine = encrypt(nextLine, key);
-                fileContents += nextLine;
+                noEncyrptFileContents += nextLine;
             }
             while ( (nextLine = bufferedReader.readLine()) != null ){
-                nextLine = encrypt(nextLine, key);
-                fileContents += "\n" + nextLine;
+                noEncyrptFileContents += "\n" + nextLine;
             }
             bufferedReader.close();
+            fileContents = encrypt(noEncyrptFileContents, key);
         } catch (FileNotFoundException fnfe){
             System.err.println("File does not exist");
         } catch( IOException ioe) {
@@ -137,7 +137,7 @@ public class FileClackData extends ClackData{
                 fileContents = decrypt(fileContents, key);
                 bufferedWriter.write(fileContents);
             bufferedWriter.close();
-        }catch (FileNotFoundException fnfe){
+        } catch (FileNotFoundException fnfe){
             System.err.println("File does not exist");
         } catch( IOException ioe) {
             System.err.println("IOException occurred");

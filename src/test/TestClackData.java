@@ -14,8 +14,8 @@ public class TestClackData {
 //        tester.readFileContents();
 //        tester.writeFileContents();
 
-        tester.readFileContents("BEANSYEA");
-        tester.writeFileContents("BEANSYEA");
+        tester.readFileContents("BEANS");
+        tester.writeFileContents("BEANS");
 
         System.out.println("******************************\n" + "MessageClackData Tests: \n");
         ClackData data1 = new MessageClackData(null, "hello world", 2);
