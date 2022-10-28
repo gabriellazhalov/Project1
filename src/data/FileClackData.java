@@ -19,7 +19,7 @@ public class FileClackData extends ClackData{
     public FileClackData(String userName, String fileName, int type) {
         super(userName, type);
         this.fileName = fileName;
-        this.fileContents = null;
+        this.fileContents = "";
     }
 
     /**
@@ -28,7 +28,7 @@ public class FileClackData extends ClackData{
     public FileClackData() {
         super();
         this.fileName = null;
-        this.fileContents = null;
+        this.fileContents = "";
     }
 
     /**
@@ -67,16 +67,20 @@ public class FileClackData extends ClackData{
      */
     public void readFileContents() throws IOException {
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
-            String nextLine;
-            while ((nextLine = bufferedReader.readLine()) != null) {
+            File file = new File(fileName);
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            String nextLine = bufferedReader.readLine();
+            if (nextLine != null) {
                 fileContents += nextLine;
+            }
+            while ((nextLine = bufferedReader.readLine()) != null) {
+                fileContents += "\n" + nextLine;
             }
             bufferedReader.close();
         } catch (FileNotFoundException fnfe){
-                System.err.println("File does not exist");
-        } catch( IOException ioe) {
-            System.err.println("IOException occurred");
+                System.err.println("File not found.");
+        } catch(IOException ioe) {
+            System.err.println("IOException occurred.");
         }
     }
 
@@ -86,11 +90,16 @@ public class FileClackData extends ClackData{
      */
     public void readFileContents(String key) {
         try{
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
-            String nextLine;
-            while ( (nextLine = bufferedReader.readLine()) != null ){
+            File file = new File(fileName);
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            String nextLine = bufferedReader.readLine();
+            if (nextLine != null) {
                 nextLine = encrypt(nextLine, key);
                 fileContents += nextLine;
+            }
+            while ( (nextLine = bufferedReader.readLine()) != null ){
+                nextLine = encrypt(nextLine, key);
+                fileContents += "\n" + nextLine;
             }
             bufferedReader.close();
         } catch (FileNotFoundException fnfe){
@@ -105,7 +114,8 @@ public class FileClackData extends ClackData{
      */
     public void writeFileContents() {
         try{
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
+            File file = new File(fileName);
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
             bufferedWriter.write(fileContents);
             bufferedWriter.close();
         }catch (FileNotFoundException fnfe){
@@ -122,9 +132,10 @@ public class FileClackData extends ClackData{
      */
     public void writeFileContents(String key) {
         try{
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
-            fileContents = decrypt(fileContents, key);
-            bufferedWriter.write(fileContents);
+            File file = new File(fileName);
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+                fileContents = decrypt(fileContents, key);
+                bufferedWriter.write(fileContents);
             bufferedWriter.close();
         }catch (FileNotFoundException fnfe){
             System.err.println("File does not exist");
