@@ -91,7 +91,7 @@ public class FileClackData extends ClackData{
      * Reads contents of a file and encrypts them using <code>key</code> before storing it into fileContents data member
      * @param key Key to encrypt filecontents with
      */
-    public void readFileContents(String key) {
+    public void readFileContents(String key) throws IOException {
         try{
             File file = new File(fileName);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
