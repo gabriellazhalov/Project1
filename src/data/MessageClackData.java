@@ -21,10 +21,18 @@ public class MessageClackData extends ClackData {
     }
 
     /**
+     * Constructor for MessageClackData, takes a key and automatically encrypts message.
+     */
+    public MessageClackData(String userName, String message, String key, int type) {
+        this(userName, "", type);
+        this.message = encrypt(message, key);
+    }
+
+    /**
      * default constructor for MessageClackData, calls main constructor and sets default values for the object
      */
     public MessageClackData() {
-        this("Anon", "N/A", 0);
+        this("Anon", "N/A", 1);
     }
 
     /**
@@ -34,6 +42,13 @@ public class MessageClackData extends ClackData {
     public String getData() {
         return message;
     }
+
+    /**
+     * Accessor method for decrypted message
+     * @param key Key to decrypt encrypted data
+     * @return Decrypted message
+     */
+    public String getData(String key) { return decrypt(message, key); }
 
     /**
      * Overriding hashCode method to hash a MessageClackData object

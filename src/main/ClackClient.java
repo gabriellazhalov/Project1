@@ -1,5 +1,7 @@
 package main;
 import data.*;
+import java.util.*;
+import java.io.*;
 
 /**
  * ClackClient represents the client who is using the service. Contains information about the client,
@@ -13,7 +15,10 @@ public class ClackClient {
     private boolean closeConnection;
     private ClackData dataToSendToServer;
     private ClackData dataToReceiveFromServer;
-    public final int FIXED_PORT = 7000;
+    private static final int DEFAULT_PORT = 7000;
+    private Scanner inFromStd;
+    private final String KEY = "BEANSYEAH";
+
 
     /**
      * main constructor for ClackClient
@@ -23,11 +28,21 @@ public class ClackClient {
      * @param port port number to access
      */
     public ClackClient(String userName, String hostName, int port) {
-        this.userName = userName;
-        this.hostName = hostName;
-        this.port = port;
-        dataToSendToServer = null;
-        dataToReceiveFromServer = null;
+            this.userName = userName;
+            if (userName == null) {
+                throw new IllegalArgumentException("Username must not be null.");
+            }
+            this.hostName = hostName;
+            if (hostName == null) {
+                throw new IllegalArgumentException("Hostname must not be null.");
+            }
+            this.port = port;
+            if (port < 1024) {
+                throw new IllegalArgumentException("Port number must be greater than or equal to 1024.");
+            }
+            dataToSendToServer = null;
+            dataToReceiveFromServer = null;
+
     }
 
     /** secondary constructor for ClackClient
@@ -43,8 +58,8 @@ public class ClackClient {
      * Takes in the username of the client, sets the hostname and port to a default value
      * @param userName username of client
      */
-    public ClackClient(String userName) {
-        this(userName, "localhost");
+    public ClackClient(String userName) throws IllegalArgumentException {
+            this(userName, "localhost");
     }
 
     /** default constructor for ClackClient
@@ -55,14 +70,53 @@ public class ClackClient {
     }
 
     /**
-     * This function is currently undefined
+     * start() initializes the connection to the server
      */
-    public void start() {};
+    public void start() {
+        inFromStd = new Scanner(System.in);
+        readClientData();
+
+        dataToReceiveFromServer = dataToSendToServer;
+        printData();
+    };
 
     /**
-     * This function is currently undefined
+     * Receives an input from the user through standard input and prepares to send that data to the server
      */
-    public void readData() {};
+    public void readClientData() {
+        String dataString;
+        String tempFileName = "";
+
+        System.out.println("Input a command.");
+        dataString = inFromStd.nextLine();
+        if (dataString.length() > 8) {
+            tempFileName = dataString.substring(8);
+        }
+
+        if (dataString.equals("DONE")) {
+            closeConnection = true;
+        }
+        else if (dataString.equals("SENDFILE" + tempFileName)) {
+            try {
+                File file = new File(tempFileName);
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+                FileClackData fileData = new FileClackData(userName, tempFileName, 3);
+                fileData.readFileContents();
+                dataToSendToServer = fileData;
+            } catch (FileNotFoundException fnfe) {
+                dataToSendToServer = null;
+                System.err.println("File not found.");
+            } catch (IOException ioe) {
+                dataToSendToServer = null;
+                System.err.println("Error reading file");
+            }
+        }
+        else if (dataString.equals("LISTUSERS")) {
+        }
+        else {
+            dataToSendToServer = new MessageClackData(userName, "", 2);
+        }
+    };
 
     /**
      * This function is currently undefined
@@ -75,9 +129,11 @@ public class ClackClient {
     public void receiveData() {};
 
     /**
-     * This function is currently undefined
+     * printData prints all the client information sent by a particular user
      */
-    public void printData() {};
+    public void printData() {
+        System.out.println(dataToReceiveFromServer.toString());
+    };
 
     /** Accessor method to get the username
      * @return <code>String</code> userName

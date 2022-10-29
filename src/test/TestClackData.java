@@ -4,12 +4,30 @@ import data.ClackData;
 import data.FileClackData;
 import data.MessageClackData;
 
+import java.io.IOException;
+
 public class TestClackData {
-    public static void main(String[] args) {
-        //Testing data.MessageClackData
+    public static void main(String[] args) throws IOException {
+
+        // Used for getData(String key) calls.
+        ClackData newData = new MessageClackData("zhalovgv", "hello world", "CHECK", 2);
+        FileClackData newData2 = new FileClackData("zhalovgv", "testclass.txt", 3);
+        FileClackData errorData = new FileClackData("zhalovgv", "beans.txt", 2);
+
+        System.out.println("Testing MessageClackData's getData(String key), original message is \"hello world\"");
+        System.out.println(newData.getData("CHECK"));
+
+        newData2.readFileContents("CHECK");
+        System.out.println("Testing FileClackData's getData(String key), original fileContents is \"hello world\"");
+        System.out.println("Encrypted file is " + newData2.getData());
+        System.out.println(newData2.getData("CHECK"));
+
+        //Testing errors
+        errorData.readFileContents();
+        errorData.readFileContents("BEANS");
 
         System.out.println("******************************\n" + "MessageClackData Tests: \n");
-        ClackData data1 = new MessageClackData(null, "hello world", 2);
+        ClackData data1 = new MessageClackData("zhalovgv", "hello world", 2);
         ClackData sameData1 = new MessageClackData("zhalovgv", "hello world", 2);
         ClackData data2 = new MessageClackData();
 
@@ -51,6 +69,14 @@ public class TestClackData {
         FileClackData fileData1 = new FileClackData("andrewam", "testfile", 2);
         FileClackData sameFileData1 = new FileClackData("andrewam", "testfile", 2);
         FileClackData fileData2 = new FileClackData();
+        FileClackData tester = new FileClackData("zhalovgv", "test.txt", 2);
+
+        // Uses test.txt to test our reading and writing fileContents with and without a key
+        tester.readFileContents();
+        tester.writeFileContents();
+
+        tester.readFileContents("BEANS");
+        tester.writeFileContents("BEANS");
 
         // Testing data.ClackData and data.MessageClackData Methods on first object which
         // uses data.MessageClackData's first constructor

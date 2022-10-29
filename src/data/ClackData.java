@@ -2,6 +2,7 @@ package data;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.lang.Character;
 
 /**
  * ClackData is the superclass for all data transmitted through Clack, it has two child classes, MessageClackData and FileClackData
@@ -87,6 +88,62 @@ public abstract class ClackData {
     /**
      * Abstract Accessor to retrieve data of subclasses
      */
-    //Abstract Method
     public abstract String getData();
+
+    /**
+     * Abstract Accessor to retrieve unencrypted data of subclasses
+     * @param key Key to decrypt encrypted data
+     * @return Unencrypted data
+     */
+    public abstract String getData(String key);
+
+    /**
+     * encrypt takes a string to encrypt and a key and uses a Vignere cypher to encrypt it, returning the encryption
+     * @param inputStringToEncrypt Input plaintext string
+     * @param key Key to encrypt with
+     * @return Encrypted string
+     */
+    protected String encrypt(String inputStringToEncrypt, String key) {
+        String encryption = "";
+        int j = 0;
+        key.toUpperCase();
+        for(int i = 0; i < inputStringToEncrypt.length(); ++i) {
+            char chr = inputStringToEncrypt.charAt(i);
+            if(Character.isUpperCase(chr)) {
+                encryption += (char) (((chr - 'A') + (key.charAt(j) - 'A')) % 26 + 'A');
+                j = ++j % key.length();
+            }
+            else if (Character.isLowerCase(chr)) {
+                encryption += (char) (((chr - 'a') + (key.charAt(j) - 'A')) % 26 + 'a');
+                j = ++j % key.length();
+            }
+            else if (Character.isWhitespace(chr)) encryption += chr;
+        }
+        return encryption;
+    }
+
+    /**
+     * decrypt takes a string encrypted with a Vignere cyper and decrypts it returning the decrypted string
+     * @param inputStringToDecrypt Encrypted String
+     * @param key Key for decrypting string
+     * @return Decrypted String
+     */
+    protected String decrypt(String inputStringToDecrypt, String key) {
+        String decryption = "";
+        int j = 0;
+        key.toUpperCase();
+        for(int i = 0; i < inputStringToDecrypt.length(); ++i) {
+            char chr = inputStringToDecrypt.charAt(i);
+            if(Character.isUpperCase(chr)) {
+                decryption += (char) (((chr - 'A') - (key.charAt(j) - 'A') + 26) % 26 + 'A');
+                j = ++j % key.length();
+            }
+            else if (Character.isLowerCase(chr)) {
+                decryption += (char) (((chr - 'a') - (key.charAt(j) - 'A') + 26) % 26 + 'a');
+                j = ++j % key.length();
+            }
+            else decryption += chr;
+        }
+        return decryption;
+    }
 }

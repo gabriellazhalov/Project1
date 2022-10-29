@@ -12,7 +12,7 @@ public class ClackServer {
     private ClackData dataToReceiveFromClient;
     private ClackData dataToSendToClient;
 
-    private final int DEFAULT_PORT = 7000;
+    private static final int DEFAULT_PORT = 7000;
 
 
     /**
