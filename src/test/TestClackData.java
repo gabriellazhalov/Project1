@@ -12,13 +12,19 @@ public class TestClackData {
         // Used for getData(String key) calls.
         ClackData newData = new MessageClackData("zhalovgv", "hello world", "CHECK", 2);
         FileClackData newData2 = new FileClackData("zhalovgv", "testclass.txt", 3);
+        FileClackData errorData = new FileClackData("zhalovgv", "beans.txt", 2);
 
         System.out.println("Testing MessageClackData's getData(String key), original message is \"hello world\"");
         System.out.println(newData.getData("CHECK"));
 
         newData2.readFileContents("CHECK");
         System.out.println("Testing FileClackData's getData(String key), original fileContents is \"hello world\"");
+        System.out.println("Encrypted file is " + newData2.getData());
         System.out.println(newData2.getData("CHECK"));
+
+        //Testing errors
+        errorData.readFileContents();
+        errorData.readFileContents("BEANS");
 
         System.out.println("******************************\n" + "MessageClackData Tests: \n");
         ClackData data1 = new MessageClackData("zhalovgv", "hello world", 2);

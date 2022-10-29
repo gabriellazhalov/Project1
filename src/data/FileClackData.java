@@ -105,9 +105,6 @@ public class FileClackData extends ClackData{
             }
             bufferedReader.close();
             fileContents = encrypt(noEncyrptFileContents, key);
-            // Below is for TestClackData, in order to show what this function has done.
-            System.out.println("fileContents for readFileContents(String key): " + fileContents);
-            // End of test.
         } catch (FileNotFoundException fnfe){
             System.err.println("File does not exist");
         } catch( IOException ioe) {

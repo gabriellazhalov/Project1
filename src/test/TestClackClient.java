@@ -7,9 +7,8 @@ import java.io.IOException;
 public class TestClackClient {
     public static void main(String[] args) throws IOException {
 
-        // IN ORDER TO TEST FOR EXCEPTIONS, UNCOMMENT ONE TEST CLIENT AT TIME
-
-        //  ClackClient tester = new ClackClient("zhalovgv", null, 2000);
+       // IN ORDER TO TEST FOR EXCEPTIONS, UNCOMMENT ONE TEST CLIENT AT TIME
+       //  ClackClient tester = new ClackClient("zhalovgv", null, 2000);
        // ClackClient tester = new ClackClient(null, "gabi", 2000);
        // ClackClient tester = new ClackClient("zhalovgv", "gabi", 1000);
 
