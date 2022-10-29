@@ -99,9 +99,8 @@ public class ClackClient {
         else if (dataString.equals("SENDFILE" + tempFileName)) {
             try {
                 File file = new File(tempFileName);
-                BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
                 FileClackData fileData = new FileClackData(userName, tempFileName, 3);
-                fileData.readFileContents();
+                fileData.readFileContents(KEY);
                 dataToSendToServer = fileData;
             } catch (FileNotFoundException fnfe) {
                 dataToSendToServer = null;
@@ -132,7 +131,7 @@ public class ClackClient {
      * printData prints all the client information sent by a particular user
      */
     public void printData() {
-        System.out.println(dataToReceiveFromServer.toString());
+        System.out.println("User: " + dataToReceiveFromServer.getUserName() + "\nFile Contents: " + dataToReceiveFromServer.getData(KEY) + "\nType of Data: " + dataToReceiveFromServer.getType() + "\nDate: " + dataToReceiveFromServer.getDate());
     };
 
     /** Accessor method to get the username
