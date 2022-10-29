@@ -1,6 +1,7 @@
 package main;
 import data.*;
 import java.util.*;
+import java.io.*;
 
 /**
  * ClackClient represents the client who is using the service. Contains information about the client,
@@ -93,10 +94,22 @@ public class ClackClient {
         }
 
         if (dataString.equals("DONE")) {
-            dataToSendToServer = new MessageClackData();
+            closeConnection = true;
         }
         else if (dataString.equals("SENDFILE" + tempFileName)) {
-            dataToSendToServer = new FileClackData(userName, tempFileName, 3);
+            try {
+                File file = new File(tempFileName);
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+                FileClackData fileData = new FileClackData(userName, tempFileName, 3);
+                fileData.readFileContents();
+                dataToSendToServer = fileData;
+            } catch (FileNotFoundException fnfe) {
+                dataToSendToServer = null;
+                System.err.println("File not found.");
+            } catch (IOException ioe) {
+                dataToSendToServer = null;
+                System.err.println("Error reading file");
+            }
         }
         else if (dataString.equals("LISTUSERS")) {
         }

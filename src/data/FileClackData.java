@@ -77,6 +77,9 @@ public class FileClackData extends ClackData{
                 fileContents += "\n" + nextLine;
             }
             bufferedReader.close();
+            // Below is for TestClackData, in order to show what this function has done.
+            System.out.println("fileContents for readFileContents() method: " + fileContents);
+            // End of test.
         } catch (FileNotFoundException fnfe){
                 System.err.println("File not found.");
         } catch(IOException ioe) {
@@ -88,7 +91,7 @@ public class FileClackData extends ClackData{
      * Reads contents of a file and encrypts them using <code>key</code> before storing it into fileContents data member
      * @param key Key to encrypt filecontents with
      */
-    public void readFileContents(String key) {
+    public void readFileContents(String key) throws IOException {
         try{
             File file = new File(fileName);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
@@ -118,6 +121,9 @@ public class FileClackData extends ClackData{
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
             bufferedWriter.write(fileContents);
             bufferedWriter.close();
+            // Below is for TestClackData, in order to show what this function has done.
+            System.out.println("fileContents for writeFileContents(): " + fileContents);
+            // End of test.
         }catch (FileNotFoundException fnfe){
             System.err.println("File does not exist");
         } catch(IOException ioe) {
@@ -137,6 +143,9 @@ public class FileClackData extends ClackData{
                 fileContents = decrypt(fileContents, key);
                 bufferedWriter.write(fileContents);
             bufferedWriter.close();
+            // Below is for TestClackData, in order to show what this function has done.
+            System.out.println("fileContents for writeFileContents(String key): " + fileContents);
+            // End of test.
         } catch (FileNotFoundException fnfe){
             System.err.println("File does not exist");
         } catch( IOException ioe) {
