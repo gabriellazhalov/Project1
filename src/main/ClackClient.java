@@ -94,16 +94,20 @@ public class ClackClient {
         }
 
         if (dataString.equals("DONE")) {
-            dataToSendToServer = new MessageClackData();
+            closeConnection = true;
         }
         else if (dataString.equals("SENDFILE" + tempFileName)) {
             try {
                 File file = new File(tempFileName);
-                BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-                dataToSendToServer = new FileClackData(userName, tempFileName, 3);
+                FileClackData fileData = new FileClackData(userName, tempFileName, 3);
+                fileData.readFileContents(KEY);
+                dataToSendToServer = fileData;
             } catch (FileNotFoundException fnfe) {
                 dataToSendToServer = null;
                 System.err.println("File not found.");
+            } catch (IOException ioe) {
+                dataToSendToServer = null;
+                System.err.println("Error reading file");
             }
         }
         else if (dataString.equals("LISTUSERS")) {
@@ -127,7 +131,7 @@ public class ClackClient {
      * printData prints all the client information sent by a particular user
      */
     public void printData() {
-        System.out.println(dataToReceiveFromServer.toString());
+        System.out.println("User: " + dataToReceiveFromServer.getUserName() + "\nFile Contents: " + dataToReceiveFromServer.getData(KEY) + "\nType of Data: " + dataToReceiveFromServer.getType() + "\nDate: " + dataToReceiveFromServer.getDate());
     };
 
     /** Accessor method to get the username
