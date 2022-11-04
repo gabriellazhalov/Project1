@@ -3,6 +3,7 @@ package data;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.lang.Character;
+import java.io.*;
 
 /**
  * ClackData is the superclass for all data transmitted through Clack, it has two child classes, MessageClackData and FileClackData
@@ -10,7 +11,7 @@ import java.lang.Character;
  * @author Aengus Andrew
  * @author Gabriella Zhalov
  */
-public abstract class ClackData {
+public abstract class ClackData implements Serializable {
     protected String userName;
     /**
      * <code>int</code> type can take 4 different forms declared constant, LISTUSERS, LOGOUT, SENDMESSAGE, SENDFILE
