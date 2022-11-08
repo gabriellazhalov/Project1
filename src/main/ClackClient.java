@@ -22,7 +22,6 @@ public class ClackClient {
 
     private ObjectInputStream inFromServer;
     private ObjectOutputStream outToServer;
-    private String serverIP;
 
 
     /**
@@ -81,12 +80,15 @@ public class ClackClient {
      */
     public void start() {
         try {
-            Socket skt = new Socket(serverIP, port);
+            Socket skt = new Socket(hostName, port);
+            outToServer = new ObjectOutputStream(skt.getOutputStream());
+            inFromServer = new ObjectInputStream(skt.getInputStream());
 
             inFromStd = new Scanner(System.in);
             readClientData();
+            sendData();
 
-            dataToReceiveFromServer = dataToSendToServer;
+            receiveData();
             printData();
         }
         catch (IOException ioe) {
@@ -134,12 +136,29 @@ public class ClackClient {
     /**
      * This function is currently undefined
      */
-    public void sendData() {};
+    public void sendData() {
+        try {
+            outToServer.writeObject(dataToSendToServer);
+        }
+        catch (IOException ioe) {
+            System.err.println("IOException - cannot write object.");
+        }
+    };
 
     /**
      * This function is currently undefined
      */
-    public void receiveData() {};
+    public void receiveData() {
+        try {
+            dataToReceiveFromServer = (ClackData) inFromServer.readObject();
+        }
+        catch (IOException ioe) {
+            System.err.println("IOException, cannot read object.");
+        }
+        catch (ClassNotFoundException cnfe) {
+            System.err.println("Class not found");
+        }
+    };
 
     /**
      * printData prints all the client information sent by a particular user
