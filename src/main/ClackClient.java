@@ -56,7 +56,7 @@ public class ClackClient {
      * @param userName username of client
      * @param hostName name of computer that is hosting the server
      */
-    public ClackClient(String userName, String hostName) {
+    public ClackClient(String userName, String hostName) throws IllegalArgumentException {
         this(userName, hostName, 7000);
     }
 
@@ -71,7 +71,7 @@ public class ClackClient {
     /** default constructor for ClackClient
      * sets the username to 'Anon', hostname to 'localhost', and port to 7000 using previous constructors
      */
-    public ClackClient() {
+    public ClackClient()throws IllegalArgumentException {
         this("Anon");
     }
 
@@ -111,6 +111,8 @@ public class ClackClient {
 
         if (dataString.equals("DONE")) {
             closeConnection = true;
+            this.dataToSendToServer = new MessageClackData(this.userName, "", KEY,
+                    1);
         }
         else if (dataString.equals("SENDFILE" + tempFileName)) {
             try {

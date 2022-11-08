@@ -25,7 +25,11 @@ public class ClackServer {
      * The main constructor takes a single integer port as argument and sets the port number to this value, then sets the data to be sent and received to null
      * @param port port number to access
      */
-    public ClackServer(int port) {
+    public ClackServer(int port) throws IllegalArgumentException {
+        if (port < 1024) {
+            throw new IllegalArgumentException("The port cannot be lesser than 1024.");
+        }
+
         this.port = port;
         dataToReceiveFromClient = null;
         dataToSendToClient = null;
@@ -37,7 +41,7 @@ public class ClackServer {
      * ClackServer() is the default constructor for this class
      * The default constructor calls the main constructor with the default port 7000
      */
-    public ClackServer() {
+    public ClackServer() throws IllegalArgumentException {
         this(7000);
     }
 
@@ -65,6 +69,9 @@ public class ClackServer {
     public void receiveData() {
         try {
             dataToReceiveFromClient = (ClackData) inFromClient.readObject();
+            if (dataToReceiveFromClient.getType() == 1) {
+                System.out.println("Connection to be closed.");
+            }
         }
         catch (IOException ioe) {
             System.err.println("IOException in reading object.");
