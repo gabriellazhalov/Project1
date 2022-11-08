@@ -2,6 +2,7 @@ package main;
 import data.*;
 import java.util.*;
 import java.io.*;
+import java.net.*;
 
 /**
  * ClackClient represents the client who is using the service. Contains information about the client,
@@ -18,6 +19,10 @@ public class ClackClient {
     private static final int DEFAULT_PORT = 7000;
     private Scanner inFromStd;
     private final String KEY = "BEANSYEAH";
+
+    private ObjectInputStream inFromServer;
+    private ObjectOutputStream outToServer;
+    private String serverIP;
 
 
     /**
@@ -42,6 +47,8 @@ public class ClackClient {
             }
             dataToSendToServer = null;
             dataToReceiveFromServer = null;
+            inFromServer = null;
+            outToServer = null;
 
     }
 
@@ -73,11 +80,18 @@ public class ClackClient {
      * start() initializes the connection to the server
      */
     public void start() {
-        inFromStd = new Scanner(System.in);
-        readClientData();
+        try {
+            Socket skt = new Socket(serverIP, port);
 
-        dataToReceiveFromServer = dataToSendToServer;
-        printData();
+            inFromStd = new Scanner(System.in);
+            readClientData();
+
+            dataToReceiveFromServer = dataToSendToServer;
+            printData();
+        }
+        catch (IOException ioe) {
+            System.err.println("IO Exception occured.");
+        }
     };
 
     /**
