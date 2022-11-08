@@ -1,5 +1,7 @@
 package main;
 import data.*;
+import java.net.*;
+import java.io.*;
 
 /**
  * ClackServer contains the information about the port that the client connects to and the data being sent to and received from the client
@@ -14,6 +16,9 @@ public class ClackServer {
 
     private static final int DEFAULT_PORT = 7000;
 
+    private ObjectOutputStream outToClient;
+    private ObjectInputStream inFromClient;
+
 
     /**
      * ClackServer(int port) is the main constructor for this class
@@ -24,6 +29,8 @@ public class ClackServer {
         this.port = port;
         dataToReceiveFromClient = null;
         dataToSendToClient = null;
+        outToClient = null;
+        inFromClient = null;
     }
 
     /**
@@ -38,21 +45,45 @@ public class ClackServer {
      * This function is currently undefined
      */
     public void start() {
+        try {
+            ServerSocket sskt = new ServerSocket(port);
+            Socket clientSkt = sskt.accept();
+            outToClient = new ObjectOutputStream(clientSkt.getOutputStream());
+            inFromClient = new ObjectInputStream(clientSkt.getInputStream());
 
+            receiveData();
+            sendData();
+        }
+        catch (IOException ioe) {
+            System.err.println("IOException occured.");
+        }
     }
 
     /**
      * This function is currently undefined
      */
     public void receiveData() {
-
+        try {
+            dataToReceiveFromClient = (ClackData) inFromClient.readObject();
+        }
+        catch (IOException ioe) {
+            System.err.println("IOException in reading object.");
+        }
+        catch (ClassNotFoundException cnfe) {
+            System.err.println("Class not found.");
+        }
     }
 
     /**
      * This function is currently undefined
      */
     public void sendData() {
-
+        try {
+            outToClient.writeObject(dataToSendToClient);
+        }
+        catch (IOException ioe) {
+            System.err.println("IOException, cannot write object.");
+        }
     }
 
     /**
