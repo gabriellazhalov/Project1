@@ -42,7 +42,7 @@ public class ClackServer {
      * The default constructor calls the main constructor with the default port 7000
      */
     public ClackServer() throws IllegalArgumentException {
-        this(7000);
+        this(DEFAULT_PORT);
     }
 
     /**
@@ -50,12 +50,14 @@ public class ClackServer {
      */
     public void start() {
         try {
+            System.out.println(port);
             ServerSocket sskt = new ServerSocket(port);
             Socket clientSkt = sskt.accept();
             outToClient = new ObjectOutputStream(clientSkt.getOutputStream());
             inFromClient = new ObjectInputStream(clientSkt.getInputStream());
 
             receiveData();
+            dataToSendToClient = dataToReceiveFromClient;
             sendData();
         }
         catch (IOException ioe) {
@@ -137,7 +139,7 @@ public class ClackServer {
 
     public static void main(String[] args) {
         if(args.length == 0) {
-            ClackServer server = new ClackServer();
+            ClackServer server = new ClackServer(7099);
             server.start();
         } else {
             ClackServer server = new ClackServer(Integer.parseInt(args[0]));

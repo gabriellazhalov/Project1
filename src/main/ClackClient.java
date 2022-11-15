@@ -57,7 +57,7 @@ public class ClackClient {
      * @param hostName name of computer that is hosting the server
      */
     public ClackClient(String userName, String hostName) throws IllegalArgumentException {
-        this(userName, hostName, 7000);
+        this(userName, hostName, DEFAULT_PORT);
     }
 
     /** tertiary constructor for ClackClient
@@ -110,7 +110,7 @@ public class ClackClient {
         }
 
         if (dataString.equals("DONE")) {
-            closeConnection = true;
+            this.closeConnection = true;
             this.dataToSendToServer = new MessageClackData(this.userName, "", KEY,
                     1);
         }
@@ -166,7 +166,7 @@ public class ClackClient {
      * printData prints all the client information sent by a particular user
      */
     public void printData() {
-        System.out.println("User: " + dataToReceiveFromServer.getUserName() + "\nFile Contents: " + dataToReceiveFromServer.getData(KEY) + "\nType of Data: " + dataToReceiveFromServer.getType() + "\nDate: " + dataToReceiveFromServer.getDate());
+            System.out.println("User: " + dataToReceiveFromServer.getUserName() + "\nFile Contents: " + dataToReceiveFromServer.getData(KEY) + "\nType of Data: " + dataToReceiveFromServer.getType() + "\nDate: " + dataToReceiveFromServer.getDate());
     };
 
     /** Accessor method to get the username
@@ -227,7 +227,7 @@ public class ClackClient {
 
     public static void main(String[] args) {
         if(args.length == 0) {
-            ClackClient client = new ClackClient();
+            ClackClient client = new ClackClient("gabi", "localhost", 7099);
             client.start();
         }
         else {
