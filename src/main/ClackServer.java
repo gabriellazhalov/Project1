@@ -135,6 +135,15 @@ public class ClackServer {
         return ("Port Number: " + this.port + "\nClose Connection: " + closeConnection + "\nData to send to Client: " + dataToSendToClient + "\nData to receive from Client: " + dataToReceiveFromClient);
     }
 
+    public static void main(String[] args) {
+        if(args.length == 0) {
+            ClackServer server = new ClackServer();
+            server.start();
+        } else {
+            ClackServer server = new ClackServer(Integer.parseInt(args[0]));
+            server.start();
+        }
 
+    }
 
 }
