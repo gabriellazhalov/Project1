@@ -46,7 +46,7 @@ public class ClackServer {
     }
 
     /**
-     * This function is currently undefined
+     * start() initializes the Server to accept Clients and then accepts them. It also receives the data and processes it before sending data back to the client.Throws IOE for IO exceptions.
      */
     public void start() {
         try {
@@ -70,7 +70,7 @@ public class ClackServer {
     }
 
     /**
-     * This function is currently undefined
+     * Receives data from the client and stores it in the appropriate object. If data is type 1 (Closing Connection) closeConnection is set to true.
      */
     public void receiveData() {
         try {
@@ -89,7 +89,7 @@ public class ClackServer {
     }
 
     /**
-     * This function is currently undefined
+     * sendData sends data back to the Client. Throws IOE exception for IO Exceptions.
      */
     public void sendData() {
         try {
@@ -142,6 +142,10 @@ public class ClackServer {
         return ("Port Number: " + this.port + "\nClose Connection: " + closeConnection + "\nData to send to Client: " + dataToSendToClient + "\nData to receive from Client: " + dataToReceiveFromClient);
     }
 
+    /**
+     * Main method is used for testing
+     * @param args Arguments of port for Client to connect to
+     */
     public static void main(String[] args) {
         if(args.length == 0) {
             ClackServer server = new ClackServer();
