@@ -14,7 +14,7 @@ public class ClackServer {
     private ClackData dataToReceiveFromClient;
     private ClackData dataToSendToClient;
 
-    private static final int DEFAULT_PORT = 7000;
+    private static final int DEFAULT_PORT = 7099;
 
     private ObjectOutputStream outToClient;
     private ObjectInputStream inFromClient;
@@ -50,15 +50,19 @@ public class ClackServer {
      */
     public void start() {
         try {
-            System.out.println(port);
             ServerSocket sskt = new ServerSocket(port);
             Socket clientSkt = sskt.accept();
             outToClient = new ObjectOutputStream(clientSkt.getOutputStream());
             inFromClient = new ObjectInputStream(clientSkt.getInputStream());
-
-            receiveData();
-            dataToSendToClient = dataToReceiveFromClient;
-            sendData();
+            while(!closeConnection) {
+                receiveData();
+                dataToSendToClient = dataToReceiveFromClient;
+                sendData();
+            }
+            sskt.close();
+            clientSkt.close();
+            outToClient.close();
+            inFromClient.close();
         }
         catch (IOException ioe) {
             System.err.println("IOException occured.");
@@ -73,6 +77,7 @@ public class ClackServer {
             dataToReceiveFromClient = (ClackData) inFromClient.readObject();
             if (dataToReceiveFromClient.getType() == 1) {
                 System.out.println("Connection to be closed.");
+                closeConnection = true;
             }
         }
         catch (IOException ioe) {
@@ -139,7 +144,7 @@ public class ClackServer {
 
     public static void main(String[] args) {
         if(args.length == 0) {
-            ClackServer server = new ClackServer(7099);
+            ClackServer server = new ClackServer(DEFAULT_PORT);
             server.start();
         } else {
             ClackServer server = new ClackServer(Integer.parseInt(args[0]));

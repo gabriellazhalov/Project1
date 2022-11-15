@@ -16,7 +16,7 @@ public class ClackClient {
     private boolean closeConnection;
     private ClackData dataToSendToServer;
     private ClackData dataToReceiveFromServer;
-    private static final int DEFAULT_PORT = 7000;
+    private static final int DEFAULT_PORT = 7099;
     private Scanner inFromStd;
     private final String KEY = "BEANSYEAH";
 
@@ -85,11 +85,17 @@ public class ClackClient {
             inFromServer = new ObjectInputStream(skt.getInputStream());
 
             inFromStd = new Scanner(System.in);
-            readClientData();
-            sendData();
 
-            receiveData();
-            printData();
+            while(!closeConnection) {
+                readClientData();
+                sendData();
+
+                receiveData();
+                printData();
+            }
+            skt.close();
+            outToServer.close();
+            inFromServer.close();
         }
         catch (IOException ioe) {
             System.err.println("IO Exception occured.");
@@ -227,7 +233,7 @@ public class ClackClient {
 
     public static void main(String[] args) {
         if(args.length == 0) {
-            ClackClient client = new ClackClient("gabi", "localhost", 7099);
+            ClackClient client = new ClackClient("anon","localhost",DEFAULT_PORT);
             client.start();
         }
         else {
