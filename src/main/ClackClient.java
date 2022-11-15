@@ -225,4 +225,30 @@ public class ClackClient {
                 + dataToSendToServer + "\nData to Receive: " + dataToReceiveFromServer;
     }
 
+    public static void main(String[] args) {
+        if(args.length == 0) {
+            ClackClient client = new ClackClient();
+            client.start();
+        }
+        else {
+            int indexOfAt = args[0].indexOf('@');
+            int indexOfColon = args[0].indexOf(':');
+            if(indexOfAt == -1) {
+                ClackClient client = new ClackClient(args[0]);
+                client.start();
+            } else if (indexOfColon == -1){
+                String username = args[0].substring(0,indexOfAt-1);
+                String IPAddress = args[0].substring(indexOfAt+1);
+                ClackClient client = new ClackClient(username, IPAddress);
+                client.start();
+            } else {
+                String username = args[0].substring(0,indexOfAt-1);
+                String IPAddress = args[0].substring(indexOfAt+1, indexOfColon-1);
+                String portNum = args[0].substring(indexOfColon+1);
+                ClackClient client = new ClackClient(username, IPAddress, Integer.parseInt(portNum));
+                client.start();
+            }
+        }
+    }
+
 }
