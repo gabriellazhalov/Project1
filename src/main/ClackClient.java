@@ -100,7 +100,7 @@ public class ClackClient {
         catch (IOException ioe) {
             System.err.println("IO Exception occured.");
         }
-    };
+    }
 
     /**
      * Receives an input from the user through standard input and prepares to send that data to the server
@@ -233,7 +233,7 @@ public class ClackClient {
 
     public static void main(String[] args) {
         if(args.length == 0) {
-            ClackClient client = new ClackClient("anon","localhost",DEFAULT_PORT);
+            ClackClient client = new ClackClient();
             client.start();
         }
         else {
@@ -243,13 +243,13 @@ public class ClackClient {
                 ClackClient client = new ClackClient(args[0]);
                 client.start();
             } else if (indexOfColon == -1){
-                String username = args[0].substring(0,indexOfAt-1);
+                String username = args[0].substring(0,indexOfAt);
                 String IPAddress = args[0].substring(indexOfAt+1);
                 ClackClient client = new ClackClient(username, IPAddress);
                 client.start();
             } else {
-                String username = args[0].substring(0,indexOfAt-1);
-                String IPAddress = args[0].substring(indexOfAt+1, indexOfColon-1);
+                String username = args[0].substring(0,indexOfAt);
+                String IPAddress = args[0].substring(indexOfAt+1, indexOfColon);
                 String portNum = args[0].substring(indexOfColon+1);
                 ClackClient client = new ClackClient(username, IPAddress, Integer.parseInt(portNum));
                 client.start();
