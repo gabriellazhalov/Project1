@@ -144,7 +144,7 @@ public class ClackServer {
 
     public static void main(String[] args) {
         if(args.length == 0) {
-            ClackServer server = new ClackServer(DEFAULT_PORT);
+            ClackServer server = new ClackServer();
             server.start();
         } else {
             ClackServer server = new ClackServer(Integer.parseInt(args[0]));
