@@ -12,7 +12,7 @@ public class TestClackClient {
        // ClackClient tester = new ClackClient(null, "gabi", 2000);
        // ClackClient tester = new ClackClient("zhalovgv", "gabi", 1000);
 
-        ClackClient client1 = new ClackClient("zhalovgv", "gabi", 2000);
+        ClackClient client1 = new ClackClient("zhalovgv", "lcoalhost", 2000);
         ClackClient sameClient1 = new ClackClient("zhalovgv", "gabi", 2000);
         ClackClient client2 = new ClackClient("zhalovgv", "gabi");
         ClackClient client3 = new ClackClient("zhalovgv");

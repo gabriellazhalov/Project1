@@ -2,6 +2,7 @@ package main;
 import data.*;
 import java.util.*;
 import java.io.*;
+import java.net.*;
 
 /**
  * ClackClient represents the client who is using the service. Contains information about the client,
@@ -15,14 +16,17 @@ public class ClackClient {
     private boolean closeConnection;
     private ClackData dataToSendToServer;
     private ClackData dataToReceiveFromServer;
-    private static final int DEFAULT_PORT = 7000;
+    private static final int DEFAULT_PORT = 7099;
     private Scanner inFromStd;
     private final String KEY = "BEANSYEAH";
+
+    private ObjectInputStream inFromServer;
+    private ObjectOutputStream outToServer;
 
 
     /**
      * main constructor for ClackClient
-     * Takes in the username of the client, the hostname of the server computer, and port number.
+     * Takes in the username of the client, the hostname of the server computer, and port number. Throws Illegal Argument exception for port numbers below 1024
      * @param userName username of client
      * @param hostName name of computer that is hosting the server
      * @param port port number to access
@@ -42,6 +46,8 @@ public class ClackClient {
             }
             dataToSendToServer = null;
             dataToReceiveFromServer = null;
+            inFromServer = null;
+            outToServer = null;
 
     }
 
@@ -50,8 +56,8 @@ public class ClackClient {
      * @param userName username of client
      * @param hostName name of computer that is hosting the server
      */
-    public ClackClient(String userName, String hostName) {
-        this(userName, hostName, 7000);
+    public ClackClient(String userName, String hostName) throws IllegalArgumentException {
+        this(userName, hostName, DEFAULT_PORT);
     }
 
     /** tertiary constructor for ClackClient
@@ -65,23 +71,39 @@ public class ClackClient {
     /** default constructor for ClackClient
      * sets the username to 'Anon', hostname to 'localhost', and port to 7000 using previous constructors
      */
-    public ClackClient() {
+    public ClackClient()throws IllegalArgumentException {
         this("Anon");
     }
 
     /**
-     * start() initializes the connection to the server
+     * start() initializes the connection to the server and loops acceptiong commands from the command line until it reads "DONE", and then closes the connection to the server.
      */
     public void start() {
-        inFromStd = new Scanner(System.in);
-        readClientData();
+        try {
+            Socket skt = new Socket(hostName, port);
+            outToServer = new ObjectOutputStream(skt.getOutputStream());
+            inFromServer = new ObjectInputStream(skt.getInputStream());
 
-        dataToReceiveFromServer = dataToSendToServer;
-        printData();
-    };
+            inFromStd = new Scanner(System.in);
+
+            while(!closeConnection) {
+                readClientData();
+                sendData();
+
+                receiveData();
+                printData();
+            }
+            skt.close();
+            outToServer.close();
+            inFromServer.close();
+        }
+        catch (IOException ioe) {
+            System.err.println("IO Exception occured.");
+        }
+    }
 
     /**
-     * Receives an input from the user through standard input and prepares to send that data to the server
+     * Receives an input from the user through standard input and accordingly sends the appropriate information to the server for the server to execute the proper actions.
      */
     public void readClientData() {
         String dataString;
@@ -94,14 +116,15 @@ public class ClackClient {
         }
 
         if (dataString.equals("DONE")) {
-            closeConnection = true;
+            this.closeConnection = true;
+            this.dataToSendToServer = new MessageClackData(this.userName, "", KEY,
+                    1);
         }
         else if (dataString.equals("SENDFILE" + tempFileName)) {
             try {
                 File file = new File(tempFileName);
-                BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
                 FileClackData fileData = new FileClackData(userName, tempFileName, 3);
-                fileData.readFileContents();
+                fileData.readFileContents(KEY);
                 dataToSendToServer = fileData;
             } catch (FileNotFoundException fnfe) {
                 dataToSendToServer = null;
@@ -119,20 +142,37 @@ public class ClackClient {
     };
 
     /**
-     * This function is currently undefined
+     * sendData() sends the data to the server. Throws IOE exception if object doesn't write.
      */
-    public void sendData() {};
+    public void sendData() {
+        try {
+            outToServer.writeObject(dataToSendToServer);
+        }
+        catch (IOException ioe) {
+            System.err.println("IOException - cannot write object.");
+        }
+    };
 
     /**
-     * This function is currently undefined
+     * receiveData() receives data from the server and casts it to a ClackData object, storing it in the dataToReceiveFromServer object. Throws IE exception for unreadable objects, and throws ClassNotFoundException for classes not found.
      */
-    public void receiveData() {};
+    public void receiveData() {
+        try {
+            dataToReceiveFromServer = (ClackData) inFromServer.readObject();
+        }
+        catch (IOException ioe) {
+            System.err.println("IOException, cannot read object.");
+        }
+        catch (ClassNotFoundException cnfe) {
+            System.err.println("Class not found");
+        }
+    };
 
     /**
      * printData prints all the client information sent by a particular user
      */
     public void printData() {
-        System.out.println(dataToReceiveFromServer.toString());
+            System.out.println("User: " + dataToReceiveFromServer.getUserName() + "\nFile Contents: " + dataToReceiveFromServer.getData(KEY) + "\nType of Data: " + dataToReceiveFromServer.getType() + "\nDate: " + dataToReceiveFromServer.getDate());
     };
 
     /** Accessor method to get the username
@@ -189,6 +229,36 @@ public class ClackClient {
     public String toString() {
         return "User: " + userName + "\nHost: " + hostName + "\nPort: " + port + "\nData to Send: "
                 + dataToSendToServer + "\nData to Receive: " + dataToReceiveFromServer;
+    }
+
+    /**
+     * Main method is used for testing
+     * @param args Arguments of how to connect to server of form username@IP:Port, Any of these objects can be omitted as long as they are omitted from the back forward. If no port provided default will be used. If no IP provided localhost and default port will be used. If nothing provided anonymous user will be created using localhost and default port number.
+     */
+    public static void main(String[] args) {
+        if(args.length == 0) {
+            ClackClient client = new ClackClient();
+            client.start();
+        }
+        else {
+            int indexOfAt = args[0].indexOf('@');
+            int indexOfColon = args[0].indexOf(':');
+            if(indexOfAt == -1) {
+                ClackClient client = new ClackClient(args[0]);
+                client.start();
+            } else if (indexOfColon == -1){
+                String username = args[0].substring(0,indexOfAt);
+                String IPAddress = args[0].substring(indexOfAt+1);
+                ClackClient client = new ClackClient(username, IPAddress);
+                client.start();
+            } else {
+                String username = args[0].substring(0,indexOfAt);
+                String IPAddress = args[0].substring(indexOfAt+1, indexOfColon);
+                String portNum = args[0].substring(indexOfColon+1);
+                ClackClient client = new ClackClient(username, IPAddress, Integer.parseInt(portNum));
+                client.start();
+            }
+        }
     }
 
 }
