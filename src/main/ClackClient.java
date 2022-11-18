@@ -86,12 +86,13 @@ public class ClackClient {
 
             inFromStd = new Scanner(System.in);
 
+            ClientSideServerListener listener = new ClientSideServerListener(this);
+            Thread listenerThread = new Thread(listener);
+            listenerThread.start();
+
             while(!closeConnection) {
                 readClientData();
                 sendData();
-
-                receiveData();
-                printData();
             }
             skt.close();
             outToServer.close();
@@ -195,6 +196,11 @@ public class ClackClient {
     public int getPort() {
         return port;
     }
+
+    /** Accessor method to return if connection should be closed or not
+     * @return <code>boolean</code> closeConnection
+     */
+    public boolean getCloseConnection() {return closeConnection;}
 
     /**
      * Overriding hashCode method to hash a ClackClient object
