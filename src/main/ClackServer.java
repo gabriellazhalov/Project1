@@ -100,6 +100,10 @@ public class ClackServer {
         }
     }
 
+    public void remove(ServerSideClientIO ssc) {
+
+    }
+
     /**
      * Returns the current value of port for the class
      * @return port
