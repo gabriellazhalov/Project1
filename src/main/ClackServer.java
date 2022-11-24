@@ -2,6 +2,7 @@ package main;
 import data.*;
 import java.net.*;
 import java.io.*;
+import java.util.*;
 
 /**
  * ClackServer contains the information about the port that the client connects to and the data being sent to and received from the client
@@ -11,13 +12,8 @@ import java.io.*;
 public class ClackServer {
     private int port;
     private boolean closeConnection;
-    private ClackData dataToReceiveFromClient;
-    private ClackData dataToSendToClient;
-
+    private ArrayList <ServerSideClientIO> serverSideClientIOList;
     private static final int DEFAULT_PORT = 7099;
-
-    private ObjectOutputStream outToClient;
-    private ObjectInputStream inFromClient;
 
 
     /**
@@ -29,12 +25,9 @@ public class ClackServer {
         if (port < 1024) {
             throw new IllegalArgumentException("The port cannot be lesser than 1024.");
         }
-
+        serverSideClientIOList = new ArrayList<ServerSideClientIO>();
         this.port = port;
-        dataToReceiveFromClient = null;
-        dataToSendToClient = null;
-        outToClient = null;
-        inFromClient = null;
+        this.closeConnection = false;
     }
 
     /**
@@ -51,58 +44,30 @@ public class ClackServer {
     public void start() {
         try {
             ServerSocket sskt = new ServerSocket(port);
-            Socket clientSkt = sskt.accept();
-            outToClient = new ObjectOutputStream(clientSkt.getOutputStream());
-            inFromClient = new ObjectInputStream(clientSkt.getInputStream());
             while(!closeConnection) {
-                receiveData();
-                dataToSendToClient = dataToReceiveFromClient;
-                sendData();
+                Socket clientSkt = sskt.accept();
+                ServerSideClientIO sclient = new ServerSideClientIO(this, clientSkt);
+                serverSideClientIOList.add(sclient);
+
+                Thread ssclioThread = new Thread(sclient);
+                ssclioThread.start();
             }
             sskt.close();
-            clientSkt.close();
-            outToClient.close();
-            inFromClient.close();
+
         }
         catch (IOException ioe) {
             System.err.println("IOException occured.");
         }
     }
 
-    /**
-     * Receives data from the client and stores it in the appropriate object. If data is type 1 (Closing Connection) closeConnection is set to true.
-     */
-    public void receiveData() {
-        try {
-            dataToReceiveFromClient = (ClackData) inFromClient.readObject();
-            if (dataToReceiveFromClient.getType() == 1) {
-                System.out.println("Connection to be closed.");
-                closeConnection = true;
-            }
-        }
-        catch (IOException ioe) {
-            System.err.println("IOException in reading object.");
-        }
-        catch (ClassNotFoundException cnfe) {
-            System.err.println("Class not found.");
-        }
-    }
-
-    /**
-     * sendData sends data back to the Client. Throws IOE exception for IO Exceptions.
-     */
-    public void sendData() {
-        try {
-            outToClient.writeObject(dataToSendToClient);
-        }
-        catch (IOException ioe) {
-            System.err.println("IOException, cannot write object.");
-        }
-    }
 
     public void remove(ServerSideClientIO ssc) {
 
     }
+
+    public void broadcast(){
+
+    };
 
     /**
      * Returns the current value of port for the class
@@ -119,8 +84,6 @@ public class ClackServer {
     public int hashCode() {
         int hashedValue = 0;
         hashedValue += this.port;
-        if(dataToReceiveFromClient != null) hashedValue += dataToReceiveFromClient.hashCode();
-        if(dataToSendToClient != null) hashedValue += dataToSendToClient.hashCode();
         if(closeConnection) hashedValue += 1;
         return hashedValue;
     }
@@ -133,9 +96,7 @@ public class ClackServer {
     public boolean equals(Object obj) {
         ClackServer clackServer = (ClackServer) obj;
         return this.port == clackServer.port &&
-                this.closeConnection == clackServer.closeConnection &&
-                this.dataToReceiveFromClient == clackServer.dataToReceiveFromClient &&
-                this.dataToSendToClient == clackServer.dataToSendToClient;
+                this.closeConnection == clackServer.closeConnection;
     }
 
     /**
@@ -143,7 +104,7 @@ public class ClackServer {
      * @return <code>String</code> representing all data in the ClackServer object
      */
     public String toString() {
-        return ("Port Number: " + this.port + "\nClose Connection: " + closeConnection + "\nData to send to Client: " + dataToSendToClient + "\nData to receive from Client: " + dataToReceiveFromClient);
+        return ("Port Number: " + this.port + "\nClose Connection: " + closeConnection);
     }
 
     /**

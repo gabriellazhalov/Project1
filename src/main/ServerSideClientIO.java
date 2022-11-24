@@ -26,7 +26,18 @@ public class ServerSideClientIO implements Runnable {
 
     @Override
     public void run() {
+        try {
+            inFromClient = new ObjectInputStream(clientSocket.getInputStream());
+            outToClient = new ObjectOutputStream(clientSocket.getOutputStream());
 
+            while(!closeConnection) {
+                receiveData();
+                server.broadcast();
+            }
+        }
+        catch (IOException ioe) {
+            System.err.println("IO Exception in getting streams.");
+        }
     }
 
     public void receiveData() {
@@ -53,7 +64,7 @@ public class ServerSideClientIO implements Runnable {
         }
     }
 
-    public void dataToSendToClient(ClackData dataToSendToClient) {
+    public void setDataToSendToClient(ClackData dataToSendToClient) {
         this.dataToSendToClient = dataToSendToClient;
     }
 }
