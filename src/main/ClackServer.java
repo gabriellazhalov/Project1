@@ -61,12 +61,15 @@ public class ClackServer {
     }
 
 
-    public void remove(ServerSideClientIO ssc) {
-
+    public synchronized void remove(ServerSideClientIO ssc) {
+        serverSideClientIOList.remove(ssc);
     }
 
-    public void broadcast(){
-
+    public synchronized void broadcast(ClackData dataToBroadcastToClient){
+        for(ServerSideClientIO SSCI : serverSideClientIOList) {
+            SSCI.setDataToSendToClient(dataToBroadcastToClient);
+            SSCI.sendData();
+        }
     };
 
     /**

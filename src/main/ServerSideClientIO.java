@@ -32,7 +32,7 @@ public class ServerSideClientIO implements Runnable {
 
             while(!closeConnection) {
                 receiveData();
-                server.broadcast();
+                server.broadcast(dataToReceiveFromClient);
             }
         }
         catch (IOException ioe) {
