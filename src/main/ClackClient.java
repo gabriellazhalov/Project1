@@ -84,6 +84,8 @@ public class ClackClient {
             outToServer = new ObjectOutputStream(skt.getOutputStream());
             inFromServer = new ObjectInputStream(skt.getInputStream());
 
+            outToServer.writeObject(userName);
+
             inFromStd = new Scanner(System.in);
 
             ClientSideServerListener listener = new ClientSideServerListener(this);
@@ -136,9 +138,10 @@ public class ClackClient {
             }
         }
         else if (dataString.equals("LISTUSERS")) {
+                this.dataToSendToServer = new MessageClackData(this.userName,"",0);
         }
         else {
-            dataToSendToServer = new MessageClackData(userName, "", 2);
+            dataToSendToServer = new MessageClackData(userName, dataString, 2);
         }
     };
 
@@ -173,7 +176,12 @@ public class ClackClient {
      * printData prints all the client information sent by a particular user
      */
     public void printData() {
+        if(dataToReceiveFromServer.getType() == 0) {
+
+        }
+        else {
             System.out.println("User: " + dataToReceiveFromServer.getUserName() + "\nFile Contents: " + dataToReceiveFromServer.getData(KEY) + "\nType of Data: " + dataToReceiveFromServer.getType() + "\nDate: " + dataToReceiveFromServer.getDate());
+        }
     };
 
     /** Accessor method to get the username
