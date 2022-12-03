@@ -109,6 +109,7 @@ public class ClackClient {
      * Receives an input from the user through standard input and accordingly sends the appropriate information to the server for the server to execute the proper actions.
      */
     public void readClientData() {
+
         String dataString;
         String tempFileName = "";
 
@@ -138,6 +139,7 @@ public class ClackClient {
             }
         }
         else if (dataString.equals("LISTUSERS")) {
+            dataToSendToServer = new MessageClackData(userName,"",KEY,0);
         }
         else {
             dataToSendToServer = new MessageClackData(userName, dataString, KEY, 2);
@@ -176,7 +178,11 @@ public class ClackClient {
      * printData prints all the client information sent by a particular user
      */
     public void printData() {
+        if(dataToReceiveFromServer.getType() == 0) {
+            System.out.println(dataToReceiveFromServer.getData(KEY));
+        } else {
             System.out.println("User: " + dataToReceiveFromServer.getUserName() + "\nFile Contents: " + dataToReceiveFromServer.getData(KEY) + "\nType of Data: " + dataToReceiveFromServer.getType() + "\nDate: " + dataToReceiveFromServer.getDate());
+        }
     };
 
     /** Accessor method to get the username
