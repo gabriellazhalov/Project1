@@ -141,7 +141,7 @@ public class ClackClient {
                 this.dataToSendToServer = new MessageClackData(this.userName,"",0);
         }
         else {
-            dataToSendToServer = new MessageClackData(userName, dataString, 2);
+            dataToSendToServer = new MessageClackData(userName, dataString, KEY, 2);
         }
     };
 
@@ -156,6 +156,7 @@ public class ClackClient {
             System.err.println("IOException - cannot write object.");
         }
     };
+
 
     /**
      * receiveData() receives data from the server and casts it to a ClackData object, storing it in the dataToReceiveFromServer object. Throws IE exception for unreadable objects, and throws ClassNotFoundException for classes not found.
