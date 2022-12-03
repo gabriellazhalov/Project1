@@ -76,7 +76,7 @@ public class ClackClient {
     }
 
     /**
-     * start() initializes the connection to the server and loops acceptiong commands from the command line until it reads "DONE", and then closes the connection to the server.
+     * start() starts the connection to the server and loops acceptiong commands from the command line until it reads "DONE", and then closes the connection to the server.
      */
     public void start() {
         try {
