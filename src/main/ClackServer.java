@@ -51,6 +51,10 @@ public class ClackServer {
 
                 Thread ssclioThread = new Thread(sclient);
                 ssclioThread.start();
+                System.out.println(serverSideClientIOList.size());
+                if (serverSideClientIOList.isEmpty()) {
+                    closeConnection = true;
+                }
             }
             sskt.close();
 
