@@ -33,7 +33,6 @@ public class ServerSideClientIO implements Runnable {
             while(!closeConnection) {
                 receiveData();
                 server.broadcast(dataToReceiveFromClient);
-                System.out.println(closeConnection);
             }
         }
         catch (IOException ioe) {
@@ -45,8 +44,6 @@ public class ServerSideClientIO implements Runnable {
         try {
             dataToReceiveFromClient = (ClackData) inFromClient.readObject();
             if (dataToReceiveFromClient.getType() == 1) {
-                clientSocket.close();
-                closeConnection = true;
                 server.remove(this);
             }
         }

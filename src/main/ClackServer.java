@@ -74,7 +74,7 @@ public class ClackServer {
             SSCI.setDataToSendToClient(dataToBroadcastToClient);
             SSCI.sendData();
         }
-    };
+    }
 
     /**
      * Returns the current value of port for the class
