@@ -80,6 +80,15 @@ public class ClackServer {
         return this.port;
     }
 
+    public String listusers() {
+        String userNameList = "";
+        for (ServerSideClientIO sscio : serverSideClientIOList) {
+            userNameList += (sscio.getUserName() + '\n');
+        }
+        return userNameList;
+    }
+
+
     /**
      * hashCode() is overridden from the Object class and creates a unique integer for this ClackServer object
      * @return <code>int</code> hashCode
