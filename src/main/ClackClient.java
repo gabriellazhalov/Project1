@@ -136,9 +136,10 @@ public class ClackClient {
             }
         }
         else if (dataString.equals("LISTUSERS")) {
+            this.dataToSendToServer = new MessageClackData(userName, "", 0);
         }
         else {
-            dataToSendToServer = new MessageClackData(userName, "", 2);
+            dataToSendToServer = new MessageClackData(userName, dataString, 2);
         }
     };
 
