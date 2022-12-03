@@ -76,7 +76,7 @@ public class ClackClient {
     }
 
     /**
-     * start() initializes the connection to the server and loops acceptiong commands from the command line until it reads "DONE", and then closes the connection to the server.
+     * start() starts the connection to the server and loops acceptiong commands from the command line until it reads "DONE", and then closes the connection to the server.
      */
     public void start() {
         try {
@@ -140,7 +140,7 @@ public class ClackClient {
         else if (dataString.equals("LISTUSERS")) {
         }
         else {
-            dataToSendToServer = new MessageClackData(userName, "", 2);
+            dataToSendToServer = new MessageClackData(userName, dataString, KEY, 2);
         }
     };
 
@@ -155,6 +155,7 @@ public class ClackClient {
             System.err.println("IOException - cannot write object.");
         }
     };
+
 
     /**
      * receiveData() receives data from the server and casts it to a ClackData object, storing it in the dataToReceiveFromServer object. Throws IE exception for unreadable objects, and throws ClassNotFoundException for classes not found.

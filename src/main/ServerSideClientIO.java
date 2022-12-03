@@ -11,6 +11,7 @@ public class ServerSideClientIO implements Runnable {
     private ObjectOutputStream outToClient;
     private ClackServer server;
     private Socket clientSocket;
+    private final String KEY = "BEANSYEA";
     private String userName;
 
 
@@ -34,7 +35,7 @@ public class ServerSideClientIO implements Runnable {
 
             while(!closeConnection) {
                 receiveData();
-                server.broadcast(dataToReceiveFromClient);
+                server.broadcast(dataToSendToClient);
             }
         }
         catch (IOException ioe) {
@@ -48,7 +49,10 @@ public class ServerSideClientIO implements Runnable {
     public void receiveData() {
         try {
             dataToReceiveFromClient = (ClackData) inFromClient.readObject();
-            if (dataToReceiveFromClient.getType() == 1) {
+            if(dataToReceiveFromClient.getType() == 0) {
+                dataToSendToClient = new MessageClackData(this.userName, server.listusers(),KEY,0);
+            }
+            else if (dataToReceiveFromClient.getType() == 1) {
                 clientSocket.close();
                 closeConnection = true;
                 server.remove(this);
@@ -73,5 +77,9 @@ public class ServerSideClientIO implements Runnable {
 
     public void setDataToSendToClient(ClackData dataToSendToClient) {
         this.dataToSendToClient = dataToSendToClient;
+    }
+
+    public String getUserName() {
+        return this.userName;
     }
 }
