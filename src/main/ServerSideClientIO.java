@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 
 public class ServerSideClientIO implements Runnable {
+    private String userName;
     private boolean closeConnection;
     private ClackData dataToReceiveFromClient;
     private ClackData dataToSendToClient;
@@ -29,7 +30,7 @@ public class ServerSideClientIO implements Runnable {
         try {
             inFromClient = new ObjectInputStream(clientSocket.getInputStream());
             outToClient = new ObjectOutputStream(clientSocket.getOutputStream());
-
+            this.userName = (String) inFromClient.readObject();
             while(!closeConnection) {
                 receiveData();
                 server.broadcast(dataToReceiveFromClient);
@@ -38,12 +39,20 @@ public class ServerSideClientIO implements Runnable {
         catch (IOException ioe) {
             System.err.println("IO Exception in getting streams.");
         }
+        catch (ClassNotFoundException cnfe) {
+            System.err.println("Class not found.");
+        }
     }
 
     public void receiveData() {
         try {
             dataToReceiveFromClient = (ClackData) inFromClient.readObject();
-            if (dataToReceiveFromClient.getType() == 1) {
+            if(dataToReceiveFromClient.getType() == 0) {
+                //server.listusers();
+            }
+            else if (dataToReceiveFromClient.getType() == 1) {
+                clientSocket.close();
+                closeConnection = true;
                 server.remove(this);
             }
         }
