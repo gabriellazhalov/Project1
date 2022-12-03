@@ -84,6 +84,8 @@ public class ClackClient {
             outToServer = new ObjectOutputStream(skt.getOutputStream());
             inFromServer = new ObjectInputStream(skt.getInputStream());
 
+            outToServer.writeObject(userName);
+
             inFromStd = new Scanner(System.in);
 
             ClientSideServerListener listener = new ClientSideServerListener(this);

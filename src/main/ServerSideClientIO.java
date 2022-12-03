@@ -11,6 +11,7 @@ public class ServerSideClientIO implements Runnable {
     private ObjectOutputStream outToClient;
     private ClackServer server;
     private Socket clientSocket;
+    private String userName;
 
 
     public ServerSideClientIO (ClackServer server, Socket clientSocket) {
@@ -29,6 +30,7 @@ public class ServerSideClientIO implements Runnable {
         try {
             inFromClient = new ObjectInputStream(clientSocket.getInputStream());
             outToClient = new ObjectOutputStream(clientSocket.getOutputStream());
+            this.userName = (String) inFromClient.readObject();
 
             while(!closeConnection) {
                 receiveData();
@@ -38,12 +40,17 @@ public class ServerSideClientIO implements Runnable {
         catch (IOException ioe) {
             System.err.println("IO Exception in getting streams.");
         }
+        catch (ClassNotFoundException cnd){
+            System.err.println("read erro.");
+        }
     }
 
     public void receiveData() {
         try {
             dataToReceiveFromClient = (ClackData) inFromClient.readObject();
             if (dataToReceiveFromClient.getType() == 1) {
+                clientSocket.close();
+                closeConnection = true;
                 server.remove(this);
             }
         }
