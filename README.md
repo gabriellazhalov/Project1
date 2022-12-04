@@ -1,183 +1,138 @@
-# Project Part 3
+# Project Part 4
 ## Aengus Andrew, Gabriella Zhalov
 
-## Aengus Client / Gabi Server
-### Case i
-### Client (Aengus Side)
-Input a command. \
-SENDFILEtestclass.txt \
-User: aengus \ 
-File Contents: hello world \
-Type of Data: 3 \
-Date: 2022-11-15 \
-Input a command. \
-LISTUSERS \
-User: aengus \
-File Contents: hello world \
-Type of Data: 3 \
-Date: 2022-11-15 \
-Input a command. \
-beans \
-User: aengus \
-File Contents: \
-Type of Data: 2 \
-Date: 2022-11-15 \
-Input a command. \
-DONE \
-User: aengus \
-File Contents: \
-Type of Data: 1 \
-Date: 2022-11-15 \
+## Gabi Server
 
-### Server (Aengus Side)
-Connection to be closed.
-
-### Case ii - Client (Aengus) Side
-Input a command. \
-SENDFILEtestclass.txt \
-User: aengus \
-File Contents: hello world \
-Type of Data: 3 \
-Date: 2022-11-15 \
-Input a command. \
-LISTUSERS \
-User: aengus \
-File Contents: hello world \
-Type of Data: 3 \
-Date: 2022-11-15 \
-Input a command. \
-beans \
-User: aengus \
-File Contents: \
-Type of Data: 2 \
-Date: 2022-11-15 \
-Input a command. \
-DONE \
-User: aengus \
-File Contents: \
-Type of Data: 1 \
-Date: 2022-11-15 \
-
-### Server (Gabi) Side
-Connection to be closed.
-
-### Case iii - Client (Aengus) Side
-Input a command. \
-SENDFILEtestclass.txt \
-User: aengus \
-File Contents: hello world \
-Type of Data: 3 \
-Date: 2022-11-15 \
-Input a command. \
-LISTUSERS \
-User: aengus \
-File Contents: hello world \
-Type of Data: 3 \
-Date: 2022-11-15 \
-Input a command. \
-beans \
-User: aengus \
-File Contents: \
-Type of Data: 2 \
-Date: 2022-11-15 \
-Input a command. \
-DONE \
-User: aengus \
-File Contents: \
-Type of Data: 1 \
-Date: 2022-11-15 \
-
-### Server (Gabi) Side
-Connection to be closed.
-
-
-## Gabi Client/Aengus Server
-
-### Case i
-### Client (Gabi) Side
+## Gabi's Side:
 Input a command.\
-SENDFILEtestclass.txt\
+User: aengus\
+File Contents: Hi Gabi the server is running on your computer\
+Type of Data: 2\
+Date: 2022-12-03\
+hello aengus can you send me the test file\
 User: gabi\
-File Contents: hello world\
+File Contents: hello aengus can you send me the test file\
+Type of Data: 2\
+Date: 2022-12-03\
+Input a command.\
+User: aengus\
+File Contents: Sure\
+Type of Data: 2\
+Date: 2022-12-03\
+User: aengus\
+File Contents: This is a test\
+testing\
 Type of Data: 3\
-Date: 2022-11-15\
+Date: 2022-12-03\
+thanks\
+User: gabi\
+File Contents: thanks\
+Type of Data: 2\
+Date: 2022-12-03\
+Input a command.\
+User: aengus\
+File Contents: I wonder who else might be here\
+Type of Data: 2\
+Date: 2022-12-03\
+ill check\
+User: gabi\
+File Contents: ill check\
+Type of Data: 2\
+Date: 2022-12-03\
 Input a command.\
 LISTUSERS\
-User: gabi\
-File Contents: hello world\
-Type of Data: 3\
-Date: 2022-11-15\
+aengus\
+gabi
+
 Input a command.\
-beans\
-User: gabi\
-File Contents:\
+User: aengus\
+File Contents: Looks like its just us\
 Type of Data: 2\
-Date: 2022-11-15\
-Input a command.\
-DONE\
-User: gabi\
+Date: 2022-12-03\
+User: aengus\
+File Contents: talk to you later\
+Type of Data: 2\
+Date: 2022-12-03\
+User: aengus\
 File Contents:\
 Type of Data: 1\
-Date: 2022-11-15
-
-### Server (Gabi) Side
-Connection to be closed.
-
-### Case ii
-### Client (Gabi) Side
-Input a command.\
-SENDFILEtestclass.txt\
+Date: 2022-12-03\
+okay I am leaving too\
 User: gabi\
-File Contents: hello world\
-Type of Data: 3\
-Date: 2022-11-15\
-Input a command.\
-LISTUSERS\
-User: gabi\
-File Contents: hello world\
-Type of Data: 3\
-Date: 2022-11-15\
-Input a command.\
-beans\
-User: gabi\
-File Contents:\
+File Contents: okay I am leaving too\
 Type of Data: 2\
-Date: 2022-11-15\
+Date: 2022-12-03\
 Input a command.\
-DONE\
+DONE
+
+
+## Aengus Server
+
+## Gabi's Side
+
+Input a command.\
+User: aengus\
+File Contents: Is anyone here\
+Type of Data: 2\
+Date: 2022-12-03\
+yes gabi is here\
 User: gabi\
+File Contents: yes gabi is here\
+Type of Data: 2\
+Date: 2022-12-03\
+Input a command.\
+User: aengus\
+File Contents: hi Gabi\
+Type of Data: 2\
+Date: 2022-12-03\
+I will send you the test file you need\
+User: gabi\
+File Contents: I will send you the test file you need\
+Type of Data: 2\
+Date: 2022-12-03\
+Input a command.\
+SENDFILEtest.txt\
+User: gabi\
+File Contents: This is a test\
+testing\
+Type of Data: 3\
+Date: 2022-12-03\
+Input a command.\
+User: aengus\
+File Contents: Thank you\
+Type of Data: 2\
+Date: 2022-12-03\
+User: aengus\
+File Contents: I needed that\
+Type of Data: 2\
+Date: 2022-12-03\
+User: aengus\
+File Contents: Is anyone else connected\
+Type of Data: 2\
+Date: 2022-12-03\
+gabi\
+aengus
+
+no\
+User: gabi\
+File Contents: no\
+Type of Data: 2\
+Date: 2022-12-03\
+Input a command.\
+User: aengus\
+File Contents: Thanks for the file\
+Type of Data: 2\
+Date: 2022-12-03\
+User: aengus\
 File Contents:\
 Type of Data: 1\
-Date: 2022-11-15
-
-### Server (Aengus) Side
-Connection to be closed.
-
-### Case iii
-### Client (Gabi) Side
-Input a command.\
-SENDFILEtestclass.txt\
+Date: 2022-12-03\
+okay bye\
 User: gabi\
-File Contents: hello world\
-Type of Data: 3\
-Date: 2022-11-15\
-Input a command.\
-LISTUSERS\
-User: gabi\
-File Contents: hello world\
-Type of Data: 3\
-Date: 2022-11-15\
-Input a command.\
-beans\
-User: gabi\
-File Contents:\
+File Contents: okay bye\
 Type of Data: 2\
-Date: 2022-11-15\
+Date: 2022-12-03\
 Input a command.\
-DONE\
-User: gabi\
-File Contents:\
-Type of Data: 1\
-Date: 2022-11-15
-### Server (Aengus) Side
-Connection to be closed.
+DONE
+
+
