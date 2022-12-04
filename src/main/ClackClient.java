@@ -76,7 +76,7 @@ public class ClackClient {
     }
 
     /**
-     * start() starts the connection to the server and loops acceptiong commands from the command line until it reads "DONE", and then closes the connection to the server.
+     * start() initialized the connection to the server and starts the thread that will run the ClientSideServerListener. It reads and sends data until the connection is closed.
      */
     public void start() {
         try {
@@ -93,7 +93,7 @@ public class ClackClient {
             listenerThread.start();
 
             while(!closeConnection) {
-                listenerThread.sleep(500); //Error in priotizing threads
+                listenerThread.sleep(500); //Error in priotizing threads leads to the "Input Command" dialogue printing before the previous transmission is returned by the Server, therefore the listenerThread is delayed by half a second
                 readClientData();
                 sendData();
             }
@@ -103,13 +103,13 @@ public class ClackClient {
         }
         catch (IOException ioe) {
             System.err.println("IO Exception occured.");
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        } catch (InterruptedException IE) {
+            System.err.println("Interrupted Excpetion");
         }
     }
 
     /**
-     * Receives an input from the user through standard input and accordingly sends the appropriate information to the server for the server to execute the proper actions.
+     * Receives an input from the user through standard input and organizes appropriate information for the server to execute the proper actions.
      */
     public void readClientData() {
 
@@ -178,7 +178,7 @@ public class ClackClient {
     };
 
     /**
-     * printData prints all the client information sent by a particular user
+     * printData prints all the client information sent by a particular user, it utilizes the built in key for decryption
      */
     public void printData() {
         if (dataToReceiveFromServer.getType() == 0) {
