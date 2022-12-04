@@ -93,6 +93,7 @@ public class ClackClient {
             listenerThread.start();
 
             while(!closeConnection) {
+                listenerThread.sleep(500); //Error in priotizing threads
                 readClientData();
                 sendData();
             }
@@ -102,6 +103,8 @@ public class ClackClient {
         }
         catch (IOException ioe) {
             System.err.println("IO Exception occured.");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
