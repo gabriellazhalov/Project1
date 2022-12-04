@@ -3,6 +3,9 @@ import data.*;
 import java.io.*;
 import java.net.*;
 
+/**
+ * ServerSideClientIO handles all the input and output for each of the Clients connected to the ClackServer, it implements Runnable to allow for multithreading of the clients
+ */
 public class ServerSideClientIO implements Runnable {
     private boolean closeConnection;
     private ClackData dataToReceiveFromClient;
@@ -14,7 +17,11 @@ public class ServerSideClientIO implements Runnable {
     private final String KEY = "BEANSYEAH";
     private String userName;
 
-
+    /**
+     * main constructor for ServerSideClientIO, initialized appropriate variables
+     * @param server Server that the Client is connected to
+     * @param clientSocket Socket the Client has used to connect to the server
+     */
     public ServerSideClientIO (ClackServer server, Socket clientSocket) {
         closeConnection = false;
         this.server = server;
@@ -26,6 +33,9 @@ public class ServerSideClientIO implements Runnable {
         outToClient = null;
     }
 
+    /**
+     * run() is the main looping method for ServerSideClientIO, it initializes the streams to and from the client, and loops receiving and broadcasting data until the connection is closed.
+     */
     @Override
     public void run() {
         try {
@@ -36,7 +46,6 @@ public class ServerSideClientIO implements Runnable {
             while(!closeConnection) {
                 receiveData();
                 server.broadcast(dataToReceiveFromClient);
-                if(closeConnection) clientSocket.close();
             }
         }
         catch (IOException ioe) {
@@ -47,6 +56,9 @@ public class ServerSideClientIO implements Runnable {
         }
     }
 
+    /**
+     * receiveData() reads data from the client and casts it to a ClackData object. If it is type 0 or 1 it conditions it appropriately for processing these requests.
+     */
     public void receiveData() {
         try {
             dataToReceiveFromClient = (ClackData) inFromClient.readObject();
@@ -67,6 +79,9 @@ public class ServerSideClientIO implements Runnable {
         }
     }
 
+    /**
+     * sendData() sends the data to the client
+     */
     public void sendData() {
         try {
             outToClient.writeObject(dataToSendToClient);
@@ -76,10 +91,18 @@ public class ServerSideClientIO implements Runnable {
         }
     }
 
+    /**
+     * Mutator method for dataToSendToClient
+     * @param dataToSendToClient new data to set variable value to
+     */
     public void setDataToSendToClient(ClackData dataToSendToClient) {
         this.dataToSendToClient = dataToSendToClient;
     }
 
+    /**
+     * Accessor method for userName object
+     * @return userName associated with ServerSideClientIO object
+     */
     public String getUserName() {
         return this.userName;
     }

@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * ClackServer contains the information about the port that the client connects to and the data being sent to and received from the client
+ * ClackServer contains the information about the port that the clients connect to and the data being sent to and received from the clients. The clients are stored inside an ArrayList in the form of ServerSideClientIO objects.
  * It also contains a boolean value closeConnection which says if the server needs to be closed or not
  * @author Aengus Andrew
  */
@@ -39,7 +39,7 @@ public class ClackServer {
     }
 
     /**
-     * start() initializes the Server to accept Clients and then accepts them. It also receives the data and processes it before sending data back to the client.Throws IOE for IO exceptions.
+     * start() initializes the Server to accept Clients and then accepts them. When it accepts a client it adds their data to a ServerSideCLientIO object and adds that to an ArrayList. It also starts a thread for each client.
      */
     public void start() {
         try {
@@ -64,8 +64,16 @@ public class ClackServer {
     }
 
 
+    /**
+     * remove() removes the passed ServerSideClientIO object from the serverSideClientIOList
+     * @param ssc ServerSideClientIO object to remove
+     */
     public synchronized void remove(ServerSideClientIO ssc) { serverSideClientIOList.remove(ssc);}
 
+    /**
+     * broadcast() loops through all clients currently connected to the server and sends the appropriate data to each of them.
+     * @param dataToBroadcastToClient data to be sent to all clients connected to the server
+     */
     public synchronized void broadcast(ClackData dataToBroadcastToClient){
         for(ServerSideClientIO SSCI : serverSideClientIOList) {
             SSCI.setDataToSendToClient(dataToBroadcastToClient);
@@ -81,6 +89,10 @@ public class ClackServer {
         return this.port;
     }
 
+    /**
+     * listusers() returns a string with all the userNames of clients connected to the server delimited by newline characters
+     * @return a string with all the userNames of clients connected to the server delimited by newline characters
+     */
     public String listusers() {
         String userNameList = "";
         for (ServerSideClientIO sscio : serverSideClientIOList) {
