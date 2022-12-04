@@ -42,7 +42,7 @@ public class ServerSideClientIO implements Runnable {
             System.err.println("IO Exception in getting streams.");
         }
         catch (ClassNotFoundException cnd){
-            System.err.println("read erro.");
+            System.err.println("read error.");
         }
     }
 
@@ -50,8 +50,7 @@ public class ServerSideClientIO implements Runnable {
         try {
             dataToReceiveFromClient = (ClackData) inFromClient.readObject();
             if(dataToReceiveFromClient.getType() == 0) {
-                System.out.println(server.listusers());
-                dataToReceiveFromClient = new MessageClackData(this.userName, server.listusers(),KEY,0);
+                dataToReceiveFromClient = new MessageClackData(this.userName, server.listusers(), KEY,0);
             }
             else if (dataToReceiveFromClient.getType() == 1) {
                 clientSocket.close();

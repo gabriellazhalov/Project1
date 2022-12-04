@@ -109,6 +109,7 @@ public class ClackClient {
      * Receives an input from the user through standard input and accordingly sends the appropriate information to the server for the server to execute the proper actions.
      */
     public void readClientData() {
+
         String dataString;
         String tempFileName = "";
 
@@ -181,7 +182,7 @@ public class ClackClient {
             System.out.println(dataToReceiveFromServer.getData(KEY));
         }
         else {
-             System.out.println("User: " + dataToReceiveFromServer.getUserName() + "\nFile Contents: " + dataToReceiveFromServer.getData(KEY) + "\nType of Data: " + dataToReceiveFromServer.getType() + "\nDate: " + dataToReceiveFromServer.getDate());
+            System.out.println("User: " + dataToReceiveFromServer.getUserName() + "\nFile Contents: " + dataToReceiveFromServer.getData(KEY) + "\nType of Data: " + dataToReceiveFromServer.getType() + "\nDate: " + dataToReceiveFromServer.getDate());
         }
     };
 
