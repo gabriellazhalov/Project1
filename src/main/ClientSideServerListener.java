@@ -16,6 +16,5 @@ public class ClientSideServerListener implements Runnable {
         client.receiveData();
         client.printData();
     }
-
     }
 }

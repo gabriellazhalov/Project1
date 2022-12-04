@@ -51,7 +51,6 @@ public class ClackServer {
 
                 Thread ssclioThread = new Thread(sclient);
                 ssclioThread.start();
-                System.out.println(serverSideClientIOList.size());
                 if (serverSideClientIOList.isEmpty()) {
                     closeConnection = true;
                 }
@@ -65,9 +64,7 @@ public class ClackServer {
     }
 
 
-    public synchronized void remove(ServerSideClientIO ssc) {
-        serverSideClientIOList.remove(ssc);
-    }
+    public synchronized void remove(ServerSideClientIO ssc) { serverSideClientIOList.remove(ssc);}
 
     public synchronized void broadcast(ClackData dataToBroadcastToClient){
         for(ServerSideClientIO SSCI : serverSideClientIOList) {
