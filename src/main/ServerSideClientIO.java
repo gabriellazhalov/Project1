@@ -36,6 +36,7 @@ public class ServerSideClientIO implements Runnable {
             while(!closeConnection) {
                 receiveData();
                 server.broadcast(dataToReceiveFromClient);
+                if(closeConnection) clientSocket.close();
             }
         }
         catch (IOException ioe) {

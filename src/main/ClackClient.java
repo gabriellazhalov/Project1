@@ -93,7 +93,7 @@ public class ClackClient {
             listenerThread.start();
 
             while(!closeConnection) {
-                listenerThread.sleep(500);
+                listenerThread.sleep(500); //Error in priotizing threads
                 readClientData();
                 sendData();
             }
