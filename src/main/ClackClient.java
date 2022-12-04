@@ -76,7 +76,7 @@ public class ClackClient {
     }
 
     /**
-     * start() initializes the connection to the server and loops acceptiong commands from the command line until it reads "DONE", and then closes the connection to the server.
+     * start() starts the connection to the server and loops acceptiong commands from the command line until it reads "DONE", and then closes the connection to the server.
      */
     public void start() {
         try {
@@ -84,14 +84,18 @@ public class ClackClient {
             outToServer = new ObjectOutputStream(skt.getOutputStream());
             inFromServer = new ObjectInputStream(skt.getInputStream());
 
+            outToServer.writeObject(userName);
+
             inFromStd = new Scanner(System.in);
 
+            ClientSideServerListener listener = new ClientSideServerListener(this);
+            Thread listenerThread = new Thread(listener);
+            listenerThread.start();
+
             while(!closeConnection) {
+                listenerThread.sleep(500); //Error in priotizing threads
                 readClientData();
                 sendData();
-
-                receiveData();
-                printData();
             }
             skt.close();
             outToServer.close();
@@ -99,6 +103,8 @@ public class ClackClient {
         }
         catch (IOException ioe) {
             System.err.println("IO Exception occured.");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -106,6 +112,7 @@ public class ClackClient {
      * Receives an input from the user through standard input and accordingly sends the appropriate information to the server for the server to execute the proper actions.
      */
     public void readClientData() {
+
         String dataString;
         String tempFileName = "";
 
@@ -135,9 +142,10 @@ public class ClackClient {
             }
         }
         else if (dataString.equals("LISTUSERS")) {
+            dataToSendToServer = new MessageClackData(userName, "", KEY, 0);
         }
         else {
-            dataToSendToServer = new MessageClackData(userName, "", 2);
+            dataToSendToServer = new MessageClackData(userName, dataString, KEY, 2);
         }
     };
 
@@ -152,6 +160,7 @@ public class ClackClient {
             System.err.println("IOException - cannot write object.");
         }
     };
+
 
     /**
      * receiveData() receives data from the server and casts it to a ClackData object, storing it in the dataToReceiveFromServer object. Throws IE exception for unreadable objects, and throws ClassNotFoundException for classes not found.
@@ -172,7 +181,12 @@ public class ClackClient {
      * printData prints all the client information sent by a particular user
      */
     public void printData() {
+        if (dataToReceiveFromServer.getType() == 0) {
+            System.out.println(dataToReceiveFromServer.getData(KEY));
+        }
+        else {
             System.out.println("User: " + dataToReceiveFromServer.getUserName() + "\nFile Contents: " + dataToReceiveFromServer.getData(KEY) + "\nType of Data: " + dataToReceiveFromServer.getType() + "\nDate: " + dataToReceiveFromServer.getDate());
+        }
     };
 
     /** Accessor method to get the username
@@ -195,6 +209,11 @@ public class ClackClient {
     public int getPort() {
         return port;
     }
+
+    /** Accessor method to return if connection should be closed or not
+     * @return <code>boolean</code> closeConnection
+     */
+    public boolean getCloseConnection() {return closeConnection;}
 
     /**
      * Overriding hashCode method to hash a ClackClient object
